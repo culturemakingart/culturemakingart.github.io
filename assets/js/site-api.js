@@ -25,7 +25,7 @@ window.SiteAPI = (() => {
     loggedIn:()=>!!session,
     async consumeLink(){
       const h=new URLSearchParams(location.hash.slice(1));
-      if(h.has('error_description')){const e=h.get('error_description');history.replaceState(null,'',location.pathname);throw Error(e);}
+      if(h.has('error_description')){history.replaceState(null,'',location.pathname);throw Error('로그인 링크가 만료되었거나 이미 사용됐습니다. 아래에서 새 로그인 링크를 받은 뒤 가장 최근 메일의 링크를 한 번만 열어주세요.');}
       if(h.has('access_token')){remember({access_token:h.get('access_token'),refresh_token:h.get('refresh_token'),expires_at:Math.floor(Date.now()/1000)+Number(h.get('expires_in')||3600)});history.replaceState(null,'',location.pathname);}
     },
     async login(email){return request('/auth/v1/otp?redirect_to='+encodeURIComponent(location.origin+'/admin/'),{method:'POST',body:{email,create_user:true}});},
