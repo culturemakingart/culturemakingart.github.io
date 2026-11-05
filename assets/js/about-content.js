@@ -1,3 +1,14 @@
+window.renderPartnerArtists=function(d){
+  const title=document.querySelector('#h-partners'),list=document.querySelector('#partner-artists');if(!title||!list)return;
+  title.textContent=d.partnersTitle??'파트너 작가';list.replaceChildren();
+  const make=(tag,text,cls)=>{const e=document.createElement(tag);if(text)e.textContent=text;if(cls)e.className=cls;return e;};
+  for(const person of Array.isArray(d.partnersList)?d.partnersList:[]){
+    const li=make('li',undefined,'member');
+    if(person.image){try{const url=new URL(person.image,location.origin);if(url.protocol==='https:'||url.origin===location.origin){const box=make('div',undefined,'ph member-photo'),img=make('img');img.src=url.href;img.alt=person.alt||person.name||'';img.loading='lazy';box.append(img);li.append(box);}}catch{}}
+    if(person.name)li.append(make('strong',person.name));if(person.role)li.append(make('span',person.role,'role'));
+    if(person.bio){const bio=make('div',undefined,'member-bio');for(const text of person.bio.split(/\n\s*\n/).filter(Boolean))bio.append(make('p',text));li.append(bio);}list.append(li);
+  }
+};
 window.renderStructuredAbout=function(d){
   const $=s=>document.querySelector(s),make=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
   function set(selector,value){const e=$(selector);if(e){e.textContent=value||'';e.style.whiteSpace='pre-line';}}

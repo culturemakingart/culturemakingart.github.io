@@ -60,6 +60,7 @@ window.AdminSections=(()=>{
     const aim=section('우리가 지향하는 것');field(aim,'영역 제목',state,'aimTitle');field(aim,'설명 글',state,'aimIntro',{area:true});repeater(aim,'aimsList',{title:'지향점',empty:'지향점을 추가해주세요.',fields:[['title','소제목'],['body','설명',true]]});
     const method=section('활동을 만드는 방식');field(method,'영역 제목',state,'methodTitle');field(method,'본문 글',state,'method',{area:true});
     const members=section('함께하는 사람들','사람별로 이름·역할·소개·사진을 편집합니다. 빼기와 순서 변경은 저장할 때 반영됩니다.');field(members,'영역 제목',state,'membersTitle');repeater(members,'membersList',{title:'사람',empty:'등록된 사람이 없습니다. 아래에서 추가하세요.',fields:[['name','이름'],['role','역할·직책'],['bio','소개·이력',true]],photos:true});
+    const partners=section('파트너 작가','함께하는 사람들 아래에 표시됩니다. 이름·활동 분야·소개·사진을 입력하고 순서를 바꿀 수 있습니다.');field(partners,'영역 제목',state,'partnersTitle');repeater(partners,'partnersList',{title:'파트너 작가',empty:'등록된 파트너 작가가 없습니다. 아래에서 추가하세요.',fields:[['name','이름'],['role','활동 분야·역할'],['bio','소개·이력',true]],photos:true});
     const history=section('연혁','연도와 활동을 한 줄씩 추가합니다. 최신 항목을 위로 옮길 수 있습니다.');field(history,'영역 제목',state,'historyTitle');field(history,'연혁 안내 글',state,'historyIntro',{area:true});repeater(history,'historyList',{title:'연혁',empty:'등록된 연혁이 없습니다. 아래에서 첫 항목을 추가하세요.',fields:[['year','연도·기간'],['title','활동명'],['organization','주최·협력 기관'],['description','활동 설명 (선택)',true]],kindSelect:true});
     const cta=section('페이지 아래 안내 문구');field(cta,'안내 제목',state,'ctaTitle');field(cta,'안내 글',state,'ctaBody',{area:true});field(cta,'활동 기록 버튼 문구',state,'projectButton');field(cta,'협업 안내 버튼 문구',state,'collaborationButton');
   }
@@ -68,12 +69,13 @@ window.AdminSections=(()=>{
       if(!Object.hasOwn(data,'aimsList')&&Object.hasOwn(data,'aim')){d.aimIntro=data.aim;d.aimsList=[];}
       if(!Object.hasOwn(data,'membersList')&&Object.hasOwn(data,'members'))d.membersList=clean(data.members)?[{name:'',bio:data.members}]:[];
       if(!Object.hasOwn(data,'historyList')&&Object.hasOwn(data,'history'))d.historyList=clean(data.history)?[{title:data.history}]:[];
-      for(const k of ['aimsList','membersList','historyList'])if(!Array.isArray(d[k]))d[k]=[];
+      if(d.partnersTitle===undefined)d.partnersTitle='파트너 작가';
+      for(const k of ['aimsList','membersList','partnersList','historyList'])if(!Array.isArray(d[k]))d[k]=[];
     }return d;
   }
   function read(){const d=structuredClone(state);d.editorVersion=2;if(d.imageMode!=='reference')d.imageSource=null;
     if(d.imageMode==='reference'&&!d.imageSource?.id)throw Error('홈에 연결할 프로그램 또는 프로젝트를 선택해주세요.');
-    for(const key of ['aimsList','membersList','historyList'])if(d[key])d[key]=d[key].filter(o=>Object.values(o).some(v=>typeof v==='string'&&v.trim()));
+    for(const key of ['aimsList','membersList','partnersList','historyList'])if(d[key])d[key]=d[key].filter(o=>Object.values(o).some(v=>typeof v==='string'&&v.trim()));
     return d;
   }
   return {defaults,prepare,mount,read};
