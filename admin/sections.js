@@ -45,7 +45,7 @@ window.AdminSections=(()=>{
       state.imageMode=state.imageMode||'upload';
       const modes=[['upload','이미지 파일 올리기'],['reference','프로그램·프로젝트에서 선택']];
       for(const[value,label]of modes){const l=make('label'),r=make('input');r.type='radio';r.name='home-image-mode';r.value=value;r.checked=state.imageMode===value;r.onchange=()=>{state.imageMode=value;show();notify();};l.append(r,document.createTextNode(label));tabs.append(l);}media.append(tabs,direct,linked);
-      const refreshDirect=photo(direct,state,{label:'메인 이미지'});
+      const refreshDirect=photo(direct,state,{label:'메인 이미지'});field(media,'사진 아래 작품·활동명 (선택)',state,'imageCaption');field(media,'사진 아래 연도 (선택)',state,'imageYear');
       const selectedPreview=make('img',undefined,'image-preview');linked.append(selectedPreview);const label=make('label','연동할 프로그램·프로젝트'),select=make('select');select.append(make('option','선택해주세요'));select.firstChild.value='';
       const candidates=rows.filter(r=>['program','project'].includes(r.kind)&&r.published&&r.data.image);
       for(const r of candidates){const o=make('option',(r.kind==='program'?'프로그램 · ':'프로젝트 · ')+(r.data.title||r.id));o.value=r.id;select.append(o);}if(state.imageSource?.id&&!candidates.some(r=>r.id===state.imageSource.id)){const old=make('option','기존 선택 · 현재 비공개 (마지막 사진 유지)');old.value=state.imageSource.id;select.append(old);}select.value=state.imageSource?.id||'';label.append(select);linked.append(label);

@@ -36,6 +36,8 @@
   --dash: 1.5px dashed var(--ink);
   --container: 1200px;
   --gutter: 40px;
+  /* 픽셀 계단 모서리 (사진 가장자리용) */
+  --pixel-corner: polygon(0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px));
 }
 
 @media (max-width: 600px) {
@@ -61,12 +63,6 @@ body {
   min-height: 100svh;
 }
 main { flex: 1; }
-.inquiry-form label{display:grid;gap:6px;margin:18px 0}
-.inquiry-form input:not([type=checkbox]),.inquiry-form textarea{width:100%;font:inherit;background:white;border:var(--line);padding:12px}
-.inquiry-form textarea{resize:vertical}
-.inquiry-form .consent{display:flex;align-items:center}
-.inquiry-form p{font-size:14px}
-.inquiry-form button:disabled{opacity:.5}
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 h1, h2, h3, p, dl, dd, figure { margin: 0; }
@@ -239,8 +235,15 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .window__dots span:nth-child(1) { background: var(--pollen); }
 .window__dots span:nth-child(2) { background: var(--blush); }
 .window__dots span:nth-child(3) { background: var(--cream); }
-.window img { width: 100%; height: 100%; object-fit: cover; }
-.window .hero__photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 46% center; }
+.window img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.window img.is-portrait { aspect-ratio: 4 / 5; }
+/* 창 아래 상태줄: 사진 캡션 (작품·활동명, 연도) */
+.window__status {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 9px 14px; border-top: var(--line); background: var(--cream);
+  font-family: var(--font-pixel); font-size: 13px; line-height: 1.4;
+}
+.window__status span:last-child { color: var(--petal-text); flex: none; }
 @media (max-width: 600px) {
   .window { box-shadow: 7px 7px 0 var(--blush); }
   .window__bar { padding: 8px 12px; }
@@ -273,12 +276,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   background: var(--pollen); border: var(--line); transform: rotate(-6deg);
 }
 .sticker svg { width: 56px; height: auto; }
+.hero__visual .sticker { bottom: 66px; }
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; gap: 44px; padding-top: 44px; padding-bottom: 64px; }
   .hero__text { gap: 22px; }
   .hero__lead { font-size: 16px; line-height: 1.8; }
   .hero__visual { padding: 0 8px 8px 0; margin-left: 20px; }
-  .sticker { left: -22px; bottom: -14px; width: 76px; height: 76px; }
+  .sticker, .hero__visual .sticker { left: -22px; bottom: 50px; width: 76px; height: 76px; }
   .sticker svg { width: 40px; }
 }
 
@@ -306,8 +310,15 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   text-decoration: none; color: var(--ink); transition: box-shadow .08s ease;
 }
 .p-card:hover { box-shadow: 6px 6px 0 var(--petal); }
-.p-card__img { border-bottom: var(--line); }
-.p-card__img .ph, .p-card__img img { aspect-ratio: 16 / 10; width: 100%; object-fit: cover; }
+/* 카드 사진: 팔레트 색 '매트' 위에 계단 모서리 사진. 사진이 들어와도 색 체계가 남습니다. */
+.p-card__img { padding: 12px; border-bottom: var(--line); background: var(--sky); }
+.p-card__img.bg-blush { background: var(--blush); }
+.p-card__img.bg-pollen { background: var(--pollen); }
+.p-card__img.bg-leaf { background: var(--leaf-tint); }
+.p-card__img .ph, .p-card__img img {
+  aspect-ratio: 16 / 10; width: 100%; object-fit: cover; clip-path: var(--pixel-corner);
+}
+.p-card__img .ph { background: var(--cream); }
 .p-card__body { display: flex; flex-direction: column; gap: 10px; flex: 1; padding: 20px 20px 24px; }
 .p-card__tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .p-card__title { font-family: var(--font-pixel); font-weight: 400; font-size: 19px; line-height: 1.45; margin-top: 4px; }
@@ -333,11 +344,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .card-grid { grid-template-columns: 1fr; gap: 14px; }
   /* 모바일: 사진 대신 색 띠를 둔 가로형 카드 */
   .card-grid--compact .p-card { flex-direction: row; }
-  .card-grid--compact .p-card__img { flex: none; width: 16px; border-bottom: 0; border-right: var(--line); background: var(--sky); }
-  .card-grid--compact .p-card__img > * { display: none; }
-  .card-grid--compact .p-card:nth-child(4n+2) .p-card__img { background: var(--blush); }
-  .card-grid--compact .p-card:nth-child(4n+3) .p-card__img { background: var(--pollen); }
-  .card-grid--compact .p-card:nth-child(4n+4) .p-card__img { background: var(--leaf); }
+  /* 모바일: 왼쪽에 색 매트 썸네일 */
+  .card-grid--compact .p-card__img { flex: none; width: 104px; padding: 8px; border-bottom: 0; border-right: var(--line); display: flex; }
+  .card-grid--compact .p-card__img .ph, .card-grid--compact .p-card__img img { aspect-ratio: auto; height: 100%; min-height: 86px; font-size: 11px; }
   .card-grid--compact .p-card__body { padding: 16px; gap: 6px; }
   .card-grid--compact .p-card__title { font-size: 17px; }
   .card-grid--compact .p-card__meta { border-top: 0; padding-top: 2px; display: flex; flex-wrap: wrap; gap: 0 12px; }
@@ -403,7 +412,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* ---------- 사진 모음 ---------- */
 .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .gallery figure { display: grid; gap: 10px; }
-.gallery .ph, .gallery img { border: var(--line); aspect-ratio: 1 / 1; width: 100%; object-fit: cover; }
+.gallery .mat { padding: 10px; border: var(--line); background: var(--sky); }
+.gallery figure:nth-child(3n+2) .mat { background: var(--pollen); }
+.gallery figure:nth-child(3n+3) .mat { background: var(--blush); }
+.gallery .ph, .gallery img { aspect-ratio: 1 / 1; width: 100%; object-fit: cover; clip-path: var(--pixel-corner); }
+.gallery .ph { background: var(--cream); }
 .gallery figcaption { font-size: 14px; color: var(--ink-soft); }
 .sequence { display: grid; gap: 0; counter-reset: seq; }
 .sequence li {
@@ -416,6 +429,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .gallery figure:first-child { grid-column: 1 / -1; }
   .gallery figure:first-child .ph, .gallery figure:first-child img { aspect-ratio: 16 / 10; }
+  .gallery .mat { padding: 7px; }
   .gallery figcaption { font-size: 13px; }
   .sequence li { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
 }
@@ -478,7 +492,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- 구성원 ---------- */
 .member { display: grid; gap: 14px; align-content: start; }
-.member .member-photo{padding:0;overflow:hidden}.member-photo img{display:block;width:100%;height:100%;object-fit:cover}.member-bio p{white-space:pre-wrap}
 .member .ph { border: var(--line); aspect-ratio: 4 / 3; }
 .member strong { font-family: var(--font-pixel); font-weight: 400; font-size: 22px; }
 .member .role { font-size: 14px; font-weight: 600; color: var(--petal-text); }
@@ -529,3 +542,15 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- 404 ---------- */
 .not-found { display: grid; gap: 22px; justify-items: start; padding-top: 120px; padding-bottom: 120px; }
+
+/* 운영 기능에 필요한 스타일 유지 */
+.inquiry-form label{display:grid;gap:6px;margin:18px 0}
+.inquiry-form input:not([type=checkbox]),.inquiry-form textarea{width:100%;font:inherit;background:white;border:var(--line);padding:12px}
+.inquiry-form textarea{resize:vertical}
+.inquiry-form .consent{display:flex;align-items:center}
+.inquiry-form p{font-size:14px}
+.inquiry-form button:disabled{opacity:.5}
+.member .member-photo{padding:0;overflow:hidden}.member-photo img{display:block;width:100%;height:100%;object-fit:cover}.member-bio p{white-space:pre-wrap}
+
+.window .hero__photo{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:46% center}
+.window__status[hidden]{display:none}

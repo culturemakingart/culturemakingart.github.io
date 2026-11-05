@@ -3,6 +3,11 @@
 'use strict';const api=window.SiteAPI,$=s=>document.querySelector(s);const root=location.origin;
 const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
 const image=(url,alt)=>{if(!url)return null;let u;try{u=new URL(url,location.origin);}catch{return null;}if(u.protocol!=='https:'&&u.origin!==location.origin)return null;const img=node('img');img.src=u.href;img.alt=alt||'';img.loading='lazy';return img;};
+function statusLine(container,caption,year){if(!container)return;let bar=container.querySelector('.window__status');if(!bar){bar=node('div',undefined,'window__status');container.append(bar);}bar.replaceChildren(node('span',caption||''),node('span',year||''));bar.hidden=!caption&&!year;}
+function decoratePhotos(){
+ for(const [i,media]of [...document.querySelectorAll('.p-card__img')].entries()){if(!['bg-sky','bg-pollen','bg-blush','bg-leaf'].some(c=>media.classList.contains(c)))media.classList.add(['bg-sky','bg-pollen','bg-blush','bg-leaf'][i%4]);}
+ for(const img of document.querySelectorAll('.gallery img')){if(img.parentElement.classList.contains('mat'))continue;let figure=img.closest('figure');if(!figure){figure=node('figure');img.replaceWith(figure);figure.append(img);}const mat=node('div',undefined,'mat');img.replaceWith(mat);mat.append(img);}
+}
 function prose(container,text){if(!container)return;container.replaceChildren();for(const p of String(text||'').split(/\n\s*\n/)){const e=node('p',p);e.style.whiteSpace='pre-wrap';container.append(e);}}
 function programDetails(d){
  const anchor=$('#h-about-class')?.closest('section');if(!anchor)return;
@@ -27,6 +32,7 @@ try{
  const programs=rows.filter(r=>r.kind==='program').map(r=>({...r,data:{...defaults.get(r.id),...r.data}}));
  const projects=rows.filter(r=>r.kind==='project');
  const home=rows.find(r=>r.kind==='home');
+ if(home&&$('.hero')){const d=home.data,source=d.imageMode==='reference'?rows.find(r=>r.id===d.imageSource?.id&&r.kind===d.imageSource?.kind):null;statusLine($('.hero__visual .window'),d.imageCaption||source?.data.title,d.imageYear||source?.data.year);}
  if(home&&$('.hero')){const d=home.data;if(d.title&&d.title!=='예술로\n일상을\n만나다'){$('.hero__title').textContent=d.title;$('.hero__title').style.whiteSpace='pre-line';}if(d.summary)$('.hero__lead').textContent=d.summary;const source=d.imageMode==='reference'?rows.find(r=>r.id===d.imageSource?.id&&r.kind===d.imageSource?.kind):null;const img=image(source?.data.image||d.image,source?.data.alt||d.alt);if(img){img.className='hero__photo';img.loading='eager';$('.hero__visual .window').querySelector('img,.ph')?.replaceWith(img);}}
  const about=rows.find(r=>r.kind==='about');
  if(about&&about.data.editorVersion===2&&location.pathname==='/about/'&&window.renderStructuredAbout)window.renderStructuredAbout(about.data);
@@ -52,9 +58,9 @@ try{
      prose($('#h-about-class')?.closest('section')?.querySelector('.prose'),d.body||'자세한 수업 내용과 진행 방식은 협의할 수 있습니다.');
      const gallery=$('.gallery');gallery?.replaceChildren();for(const url of String(d.gallery||'').split('\n').filter(Boolean)){const im=image(url,d.title+' 수업 사진');if(im)gallery?.append(im);}if(gallery&&!gallery.children.length)gallery.closest('section').hidden=true;
      const contact=$('.detail-head .btn--primary');contact.href='/contact/?program='+encodeURIComponent(d.title||record.id);const note=$('.detail-head .cta-note');if(note)note.textContent='문의 페이지에서 프로그램 이름과 함께 제안할 수 있습니다.';
-     const crumb=$('.crumbs [aria-current]');if(crumb)crumb.textContent=d.title;if(d.programVersion===2)programDetails(d);return;
+     const crumb=$('.crumbs [aria-current]');if(crumb)crumb.textContent=d.title;statusLine(document.querySelector('main .window'),d.title,d.year);if(d.programVersion===2)programDetails(d);return;
    }
    const main=$('main'),section=node('section',undefined,'container section');const back=node('a','← 활동 목록','text-link');back.href='/projects/';section.append(back,node('h1',d.title||record.id,'title-page'));if(d.summary)section.append(node('p',d.summary,'lead'));const img=image(d.image,d.alt);if(img){img.style.cssText='width:100%;max-height:600px;object-fit:contain;margin:30px 0';section.append(img);}const dl=node('dl',undefined,'facts');for(const[k,l]of [['year','연도'],['place','장소'],['partners','협력 기관'],['role','담당 역할']])if(d[k]){const div=node('div');div.append(node('dt',l),node('dd',d[k]));dl.append(div);}section.append(dl);prose(section.appendChild(node('div',undefined,'prose')),d.body||'자세한 내용은 문의해주세요.');const gallery=node('div',undefined,'gallery');for(const url of String(d.gallery||'').split('\n').filter(Boolean)){const im=image(url,d.title+' 활동 사진');if(im)gallery.append(im);}section.append(gallery);const contact=node('a','이 활동으로 협업 문의하기 →','btn btn--primary');contact.href='/contact/?program='+encodeURIComponent(d.title||record.id);section.append(contact);main.replaceChildren(section);
  }
-}catch(e){if(document.querySelector('main[data-dynamic-detail]'))$('main').replaceChildren(node('p','내용을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.','container page-head'));console.warn('콘텐츠를 불러오지 못했습니다.');}finally{const detail=document.querySelector('main[data-dynamic-detail]');if(detail)detail.hidden=false;}
+}catch(e){if(document.querySelector('main[data-dynamic-detail]'))$('main').replaceChildren(node('p','내용을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.','container page-head'));console.warn('콘텐츠를 불러오지 못했습니다.');}finally{decoratePhotos();const detail=document.querySelector('main[data-dynamic-detail]');if(detail)detail.hidden=false;}
 })();
