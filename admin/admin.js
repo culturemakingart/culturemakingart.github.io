@@ -11,7 +11,7 @@ async function load(){sectionDefaults=await AdminSections.defaults();rows=await 
 function render(){
  const single=['home','about'].includes(kind);document.querySelector('.editor-layout').classList.toggle('single-editor',single);$('#records').hidden=single;
  $('#section-title').textContent=names[kind];$('#add').hidden=!['program','project'].includes(kind);$('#import').hidden=kind!=='program'||rows.some(r=>r.kind==='program');$('#records').replaceChildren();
- const selected=rows.filter(r=>r.kind===kind);if(!selected.length&&['home','about'].includes(kind)){const defaults=kind==='home'?{title:'예술로\n일상을\n만나다',summary:'문화제작예술소는 지역 주민이 환경의 변화를 감각적으로 읽어내고, 삶의 주체로서 지역을 향유하며, 일상을 낯설게 바라보는 예술적 시선을 회복할 수 있도록 다양한 프로그램을 기획하고 실행합니다.',image:location.origin+'/assets/img/home-artwork.jpg',alt:'야외 광장에 놓인 이동식 설치 작품'}:{title:'문화제작예술소는 이런 곳이에요'};selected.push({id:kind,kind,data:defaults,published:true});}
+ const selected=rows.filter(r=>r.kind===kind).sort(SiteOrder.records);if(!selected.length&&['home','about'].includes(kind)){const defaults=kind==='home'?{title:'예술로\n일상을\n만나다',summary:'문화제작예술소는 지역 주민이 환경의 변화를 감각적으로 읽어내고, 삶의 주체로서 지역을 향유하며, 일상을 낯설게 바라보는 예술적 시선을 회복할 수 있도록 다양한 프로그램을 기획하고 실행합니다.',image:location.origin+'/assets/img/home-artwork.jpg',alt:'야외 광장에 놓인 이동식 설치 작품'}:{title:'문화제작예술소는 이런 곳이에요'};selected.push({id:kind,kind,data:defaults,published:true});}
  for(const row of selected){const b=el('button',(row.data.title||row.id)+(row.published?'':' · 비공개'));b.type='button';b.setAttribute('aria-pressed',String(current?.id===row.id));b.onclick=()=>{if(uploads)return;if(dirty&&!confirm('저장하지 않은 변경을 버릴까요?'))return;edit(row);};$('#records').append(b);}
  $('#editor').hidden=true;if(single&&selected.length)edit(selected[0]);
 }

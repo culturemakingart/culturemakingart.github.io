@@ -29,8 +29,8 @@ function programDetails(d){
 try{
  const [rows,local]=await Promise.all([api.request('/rest/v1/site_content?select=*&published=eq.true&order=id'),fetch('/assets/data/programs.json').then(r=>r.json())]);
  const defaults=new Map(local.programs.map(p=>[p.slug,p]));
- const programs=rows.filter(r=>r.kind==='program').map(r=>({...r,data:{...defaults.get(r.id),...r.data}}));
- const projects=rows.filter(r=>r.kind==='project');
+ const programs=rows.filter(r=>r.kind==='program').map(r=>({...r,data:{...defaults.get(r.id),...r.data}})).sort(SiteOrder.records);
+ const projects=rows.filter(r=>r.kind==='project').sort(SiteOrder.records);
  const home=rows.find(r=>r.kind==='home');
  if(home&&$('.hero')){const d=home.data,source=d.imageMode==='reference'?rows.find(r=>r.id===d.imageSource?.id&&r.kind===d.imageSource?.kind):null;statusLine($('.hero__visual .window'),d.imageCaption||source?.data.title,d.imageYear||source?.data.year);}
  if(home&&$('.hero')){const d=home.data;if(d.title&&d.title!=='예술로\n일상을\n만나다'){$('.hero__title').textContent=d.title;$('.hero__title').style.whiteSpace='pre-line';}if(d.summary)$('.hero__lead').textContent=d.summary;const source=d.imageMode==='reference'?rows.find(r=>r.id===d.imageSource?.id&&r.kind===d.imageSource?.kind):null;const img=image(source?.data.image||d.image,source?.data.alt||d.alt);if(img){img.className='hero__photo';img.loading='eager';$('.hero__visual .window').querySelector('img,.ph')?.replaceWith(img);}}
