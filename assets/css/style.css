@@ -554,3 +554,128 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 .window .hero__photo{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:46% center}
 .window__status[hidden]{display:none}
+
+/* ---------- 프로그램 상세: 관리자에서 입력하는 추가 항목 ----------
+   site-content.js가 만드는 [data-program-details] 안의 섹션을
+   '수업 소개'와 같은 2단(제목 | 내용) 구성으로 맞춥니다. */
+[data-program-details] { border-top: var(--line); }
+[data-program-details] > section.section {
+  position: relative;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 64px; row-gap: 20px; align-items: start;
+  padding-top: 72px; padding-bottom: 72px;
+}
+[data-program-details] > section + section::before {
+  content: ''; position: absolute; top: 0; left: var(--gutter); right: var(--gutter);
+  border-top: var(--dash);
+}
+[data-program-details] > section > h2 { grid-column: 1; grid-row: 1; }
+[data-program-details] > section > :not(h2) { grid-column: 2; min-width: 0; }
+/* 사진·비용 안내는 넓게 */
+[data-program-details] > section:has(> .gallery),
+[data-program-details] > section:has(> .band) { grid-template-columns: minmax(0, 1fr); }
+[data-program-details] > section:has(> .gallery) > *,
+[data-program-details] > section:has(> .band) > * { grid-column: 1; grid-row: auto; }
+[data-program-details] > section:has(> .gallery) > h2,
+[data-program-details] > section:has(> .band) > h2 { margin-bottom: 12px; }
+
+/* 소제목: 체크리스트와 같은 색 네모 */
+[data-program-details] .title-sub { font-size: 20px; line-height: 1.4; }
+[data-program-details] > section > h3 { display: flex; align-items: center; gap: 12px; }
+[data-program-details] > section > h3::before {
+  content: ''; flex: none; width: 12px; height: 12px; background: var(--petal);
+}
+[data-program-details] > section > h3:nth-of-type(2n)::before { background: var(--sky); }
+[data-program-details] > section > .prose + h3,
+[data-program-details] > section > ol + h3 { margin-top: 20px; }
+[data-program-details] .prose { font-size: 16px; line-height: 1.85; }
+[data-program-details] > section > h3 + .prose { margin-top: -10px; }
+
+/* 참여자가 하는 것: 번호 단계 카드 */
+[data-program-details] > section > ol { display: grid; counter-reset: step; }
+[data-program-details] > section > ol > li {
+  position: relative; counter-increment: step;
+  display: grid; gap: 8px; align-content: start;
+  padding: 24px 24px 24px 84px; background: var(--paper); border: var(--line);
+}
+[data-program-details] > section > ol > li + li { border-top: 0; }
+[data-program-details] > section > ol > li::before {
+  content: counter(step); position: absolute; left: 24px; top: 22px;
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-pixel); font-size: 18px; background: var(--pollen); border: var(--line);
+}
+[data-program-details] > section > ol > li:nth-child(4n+2)::before { background: var(--blush); }
+[data-program-details] > section > ol > li:nth-child(4n+3)::before { background: var(--sky); }
+[data-program-details] > section > ol > li:nth-child(4n+4)::before { background: var(--leaf-tint); }
+[data-program-details] > section > ol > li .prose { font-size: 15.5px; line-height: 1.75; color: var(--ink-soft); }
+
+/* 운영 실적: 기관별 카드 */
+[data-program-details] > section > article {
+  display: grid; gap: 8px; padding: 22px 24px;
+  background: var(--paper); border: var(--line); box-shadow: 5px 5px 0 var(--sky);
+}
+[data-program-details] > section > article:nth-of-type(3n+2) { box-shadow: 5px 5px 0 var(--pollen); }
+[data-program-details] > section > article:nth-of-type(3n+3) { box-shadow: 5px 5px 0 var(--blush); }
+[data-program-details] > section > article > p { font-family: var(--font-pixel); font-size: 14px; color: var(--petal-text); }
+[data-program-details] > section > article .prose { font-size: 15px; line-height: 1.75; color: var(--ink-soft); }
+
+/* 현장·결과물 사진: 색 매트 + 계단 모서리 (사진 전체가 보이도록 contain) */
+[data-program-details] .gallery { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+[data-program-details] .gallery img { background: var(--cream); aspect-ratio: 4 / 3; }
+[data-program-details] .gallery:has(> figure:only-child) { grid-template-columns: minmax(0, 560px); }
+
+/* 비용 안내: 녹색 띠 위 버튼은 노란색으로 */
+[data-program-details] .band p { font-size: 17px; line-height: 1.8; max-width: 640px; }
+[data-program-details] .band .btn--primary { --shadow: var(--ink); background: var(--pollen); color: var(--ink); }
+
+/* 정보표 칸 수가 홀수일 때 마지막 칸을 한 줄로 */
+.facts > div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+@media (max-width: 900px) {
+  [data-program-details] > section.section { grid-template-columns: minmax(0, 1fr); padding-top: 48px; padding-bottom: 48px; }
+  [data-program-details] > section > h2 { grid-row: auto; margin-bottom: 4px; }
+  [data-program-details] > section > :not(h2) { grid-column: 1; }
+}
+@media (max-width: 600px) {
+  [data-program-details] > section > ol > li { padding: 20px 18px 20px 70px; }
+  [data-program-details] > section > ol > li::before { left: 16px; top: 18px; width: 36px; height: 36px; font-size: 16px; }
+  [data-program-details] > section > article { padding: 18px; box-shadow: 4px 4px 0 var(--sky); }
+  [data-program-details] .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  [data-program-details] .gallery:has(> figure:only-child) { grid-template-columns: minmax(0, 1fr); }
+  [data-program-details] .prose { font-size: 15px; }
+}
+
+/* ---------- ABOUT: 파트너 작가 (사진 없는 목록) ----------
+   about-content.js의 renderPartnerArtists가 #partner-artists 안에 만드는
+   li.member를 사진 카드 대신 칸으로 나뉜 목록으로 보여줍니다. */
+.section--paper[aria-labelledby="h-members"] + .section--paper[aria-labelledby="h-partners"] { padding-top: 0; }
+.section--paper[aria-labelledby="h-members"]:has(+ .section--paper[aria-labelledby="h-partners"]:not([hidden])) { border-bottom: 0; padding-bottom: 64px; }
+#partner-artists {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0;
+  border-top: var(--line); border-left: var(--line);
+}
+#partner-artists > .member {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; align-content: start;
+  padding: 20px 22px 22px; background: var(--paper);
+  border-right: var(--line); border-bottom: var(--line);
+}
+#partner-artists > .member .member-photo { width: 64px; aspect-ratio: 1 / 1; grid-row: auto; }
+#partner-artists > .member strong {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-pixel); font-weight: 400; font-size: 19px; line-height: 1.3;
+}
+#partner-artists > .member strong::before { content: ''; flex: none; width: 10px; height: 10px; background: var(--petal); }
+#partner-artists > .member:nth-child(4n+2) strong::before { background: var(--pollen); }
+#partner-artists > .member:nth-child(4n+3) strong::before { background: var(--sky); }
+#partner-artists > .member:nth-child(4n+4) strong::before { background: var(--leaf); }
+#partner-artists > .member .role { font-size: 13px; }
+#partner-artists > .member .member-bio { display: grid; gap: 4px; }
+#partner-artists > .member .member-bio p { font-size: 14px; line-height: 1.65; color: var(--ink-soft); white-space: pre-line; }
+@media (max-width: 1000px) { #partner-artists { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 900px) { #partner-artists { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  #partner-artists > .member { padding: 16px 14px 18px; }
+  #partner-artists > .member strong { font-size: 16px; gap: 8px; }
+  #partner-artists > .member strong::before { width: 8px; height: 8px; }
+  #partner-artists > .member .member-bio p { font-size: 13px; line-height: 1.6; }
+}
