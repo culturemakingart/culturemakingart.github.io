@@ -4,6 +4,23 @@
 const node=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
 const image=(url,alt)=>{if(!url)return null;let u;try{u=new URL(url,location.origin);}catch{return null;}if(u.protocol!=='https:'&&u.origin!==location.origin)return null;const img=node('img');img.src=u.href;img.alt=alt||'';img.loading='lazy';return img;};
 function prose(container,text){if(!container)return;container.replaceChildren();for(const p of String(text||'').split(/\n\s*\n/)){const e=node('p',p);e.style.whiteSpace='pre-wrap';container.append(e);}}
+function programDetails(d){
+ const anchor=$('#h-about-class')?.closest('section');if(!anchor)return;
+ const holder=node('div');holder.dataset.programDetails='';
+ function section(title){const s=node('section',undefined,'section container');s.append(node('h2',title,'title-section'));holder.append(s);return s;}
+ function textSection(title,text){if(!text)return;prose(section(title).appendChild(node('div',undefined,'prose')),text);}
+ const facts=$('.detail-head .facts');facts.replaceChildren();
+ const count=[d.minPeople?'최소 '+d.minPeople+'명':'',d.maxPeople?'최대 '+d.maxPeople+'명':'',d.people].filter(Boolean).join(' · ');
+ for(const[label,value]of [['대상',d.target],['참여 유형',d.audienceType],['인원',count],['1회 소요 시간',d.time],['진행 회차',[d.sessionType,d.rounds].filter(Boolean).join(' · ')],['출장',d.offsite],['진행 공간',d.venue],['연계 교과·과정',d.link]])if(value){const row=node('div');row.append(node('dt',label),node('dd',value));facts.append(row);}
+ if(d.body)textSection('프로그램 소개',d.body);
+ if(d.activitySteps?.length||d.output){const s=section('참여자가 하는 것과 결과물'),ol=node('ol');for(const step of d.activitySteps||[]){const li=node('li');if(step.title)li.append(node('h3',step.title,'title-sub'));if(step.description)prose(li.appendChild(node('div',undefined,'prose')),step.description);ol.append(li);}s.append(ol);if(d.output){s.append(node('h3','결과물','title-sub'));prose(s.appendChild(node('div',undefined,'prose')),d.output);}}
+ if(d.trackRecord?.length){const s=section('운영 실적');for(const r of d.trackRecord){const a=node('article');if(r.institution)a.append(node('h3',r.institution,'title-sub'));a.append(node('p',[r.period,r.sessions].filter(Boolean).join(' · ')));if(r.description)prose(a.appendChild(node('div',undefined,'prose')),r.description);s.append(a);}}
+ function photos(title,items){if(!items.some(p=>p?.image))return;const s=section(title),g=node('div',undefined,'gallery');for(const p of items){const im=image(p?.image,p?.alt);if(!im)continue;const f=node('figure');im.style.cssText='width:100%;height:auto;object-fit:contain';f.append(im);if(p.caption)f.append(node('figcaption',p.caption));g.append(f);}s.append(g);}
+ photos('현장 사진',d.activityPhotos||[]);photos('결과물 사진',[d.resultPhoto]);textSection('맞춤 조정 가능 범위',d.customization);
+ if(d.hostPreparation||d.providerPreparation){const s=section('준비 사항');for(const[t,v]of [['협업처가 준비할 것',d.hostPreparation],['문화제작예술소가 준비할 것',d.providerPreparation]])if(v){s.append(node('h3',t,'title-sub'));prose(s.appendChild(node('div',undefined,'prose')),v);}}
+ const cost=section('비용 안내'),band=node('div',undefined,'band'),copy=node('p',d.fee||'비용은 문의해주세요.');copy.style.whiteSpace='pre-wrap';const link=node('a','이 프로그램 문의하기 →','btn btn--primary');link.href='/contact/?program='+encodeURIComponent(d.title||'');band.append(copy,link);cost.append(band);
+ anchor.hidden=true;const photoSection=$('#h-photos')?.closest('section');if(photoSection)photoSection.hidden=true;const oldBand=document.querySelector('main .band');if(oldBand)oldBand.closest('section').hidden=true;anchor.after(holder);
+}
 try{
  const [rows,local]=await Promise.all([api.request('/rest/v1/site_content?select=*&published=eq.true&order=id'),fetch('/assets/data/programs.json').then(r=>r.json())]);
  const defaults=new Map(local.programs.map(p=>[p.slug,p]));
@@ -35,7 +52,7 @@ try{
      prose($('#h-about-class')?.closest('section')?.querySelector('.prose'),d.body||'자세한 수업 내용과 진행 방식은 협의할 수 있습니다.');
      const gallery=$('.gallery');gallery?.replaceChildren();for(const url of String(d.gallery||'').split('\n').filter(Boolean)){const im=image(url,d.title+' 수업 사진');if(im)gallery?.append(im);}if(gallery&&!gallery.children.length)gallery.closest('section').hidden=true;
      const contact=$('.detail-head .btn--primary');contact.href='/contact/?program='+encodeURIComponent(d.title||record.id);const note=$('.detail-head .cta-note');if(note)note.textContent='문의 페이지에서 프로그램 이름과 함께 제안할 수 있습니다.';
-     const crumb=$('.crumbs [aria-current]');if(crumb)crumb.textContent=d.title;return;
+     const crumb=$('.crumbs [aria-current]');if(crumb)crumb.textContent=d.title;if(d.programVersion===2)programDetails(d);return;
    }
    const main=$('main'),section=node('section',undefined,'container section');const back=node('a','← 활동 목록','text-link');back.href='/projects/';section.append(back,node('h1',d.title||record.id,'title-page'));if(d.summary)section.append(node('p',d.summary,'lead'));const img=image(d.image,d.alt);if(img){img.style.cssText='width:100%;max-height:600px;object-fit:contain;margin:30px 0';section.append(img);}const dl=node('dl',undefined,'facts');for(const[k,l]of [['year','연도'],['place','장소'],['partners','협력 기관'],['role','담당 역할']])if(d[k]){const div=node('div');div.append(node('dt',l),node('dd',d[k]));dl.append(div);}section.append(dl);prose(section.appendChild(node('div',undefined,'prose')),d.body||'자세한 내용은 문의해주세요.');const gallery=node('div',undefined,'gallery');for(const url of String(d.gallery||'').split('\n').filter(Boolean)){const im=image(url,d.title+' 활동 사진');if(im)gallery.append(im);}section.append(gallery);const contact=node('a','이 활동으로 협업 문의하기 →','btn btn--primary');contact.href='/contact/?program='+encodeURIComponent(d.title||record.id);section.append(contact);main.replaceChildren(section);
  }
