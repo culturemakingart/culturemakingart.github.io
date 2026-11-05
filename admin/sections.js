@@ -1,7 +1,7 @@
 /* 홈과 단체 소개를 항목별 폼으로 편집합니다. 기존 문자열 데이터도 보존합니다. */
 window.AdminSections=(()=>{
   const make=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;};
-  let state,root,notify,busy,api;
+  let state,root,notify,busy,api,aboutTab=0;
   const clean=s=>String(s||'').trim();
   async function defaults(){
     const [home,about]=await Promise.all(['../index.html','../about/index.html'].map(url=>fetch(url).then(r=>r.text()).then(s=>new DOMParser().parseFromString(s,'text/html'))));
@@ -60,9 +60,17 @@ window.AdminSections=(()=>{
     const aim=section('우리가 지향하는 것');field(aim,'영역 제목',state,'aimTitle');field(aim,'설명 글',state,'aimIntro',{area:true});repeater(aim,'aimsList',{title:'지향점',empty:'지향점을 추가해주세요.',fields:[['title','소제목'],['body','설명',true]]});
     const method=section('활동을 만드는 방식');field(method,'영역 제목',state,'methodTitle');field(method,'본문 글',state,'method',{area:true});
     const members=section('함께하는 사람들','사람별로 이름·역할·소개·사진을 편집합니다. 빼기와 순서 변경은 저장할 때 반영됩니다.');field(members,'영역 제목',state,'membersTitle');repeater(members,'membersList',{title:'사람',empty:'등록된 사람이 없습니다. 아래에서 추가하세요.',fields:[['name','이름'],['role','역할·직책'],['bio','소개·이력',true]],photos:true});
-    const partners=section('파트너 작가','함께하는 사람들 아래에 표시됩니다. 이름·활동 분야·소개·사진을 입력하고 순서를 바꿀 수 있습니다.');field(partners,'영역 제목',state,'partnersTitle');repeater(partners,'partnersList',{title:'파트너 작가',empty:'등록된 파트너 작가가 없습니다. 아래에서 추가하세요.',fields:[['name','이름'],['role','활동 분야·역할'],['bio','소개·이력',true]],photos:true});
-    const history=section('연혁','연도와 활동을 한 줄씩 추가합니다. 최신 항목을 위로 옮길 수 있습니다.');field(history,'영역 제목',state,'historyTitle');field(history,'연혁 안내 글',state,'historyIntro',{area:true});repeater(history,'historyList',{title:'연혁',empty:'등록된 연혁이 없습니다. 아래에서 첫 항목을 추가하세요.',fields:[['year','연도·기간'],['title','활동명'],['organization','주최·협력 기관'],['description','활동 설명 (선택)',true]],kindSelect:true});
+    const partners=section('파트너 작가','함께하는 사람들 아래에 표시됩니다. 이름·활동 분야·소개를 입력하고 순서를 바꿀 수 있습니다.');field(partners,'영역 제목',state,'partnersTitle');repeater(partners,'partnersList',{title:'파트너 작가',empty:'등록된 파트너 작가가 없습니다. 아래에서 추가하세요.',fields:[['name','이름'],['role','활동 분야·역할'],['bio','소개·이력',true]]});
+    const history=section('연혁','연도와 활동을 한 줄씩 추가합니다. 최신 항목을 위로 옮길 수 있습니다.');field(history,'영역 제목',state,'historyTitle');field(history,'연혁 안내 글',state,'historyIntro',{area:true});repeater(history,'historyList',{title:'연혁',empty:'등록된 연혁이 없습니다. 아래에서 첫 항목을 추가하세요.',fields:[['year','연도·기간'],['title','활동명'],['organization','주최·협력 기관']],kindSelect:true});
     const cta=section('페이지 아래 안내 문구');field(cta,'안내 제목',state,'ctaTitle');field(cta,'안내 글',state,'ctaBody',{area:true});field(cta,'활동 기록 버튼 문구',state,'projectButton');field(cta,'협업 안내 버튼 문구',state,'collaborationButton');
+    const tabs=make('div',undefined,'about-editor-tabs');tabs.setAttribute('role','tablist');tabs.setAttribute('aria-label','단체 소개 편집 영역');
+    const groups=[['단체 소개',[intro,aim,method,cta]],['함께하는 사람들 + 파트너 작가',[members,partners]],['연혁',[history]]],panels=[],buttons=[];
+    function select(index){aboutTab=index;panels.forEach((panel,i)=>{panel.hidden=i!==index;buttons[i].setAttribute('aria-selected',String(i===index));buttons[i].tabIndex=i===index?0:-1;});}
+    groups.forEach(([label,sections],i)=>{const panel=make('div');panel.id='about-panel-'+i;panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby','about-tab-'+i);panel.tabIndex=0;sections.forEach(s=>panel.append(s));
+      const tab=button(label,()=>select(i));tab.id='about-tab-'+i;tab.setAttribute('role','tab');tab.setAttribute('aria-controls',panel.id);tab.onkeydown=e=>{let next;if(e.key==='ArrowRight')next=(i+1)%groups.length;else if(e.key==='ArrowLeft')next=(i+groups.length-1)%groups.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=groups.length-1;else return;e.preventDefault();select(next);buttons[next].focus();};
+      panel.addEventListener('invalid',()=>select(i),true);panels.push(panel);buttons.push(tab);tabs.append(tab);
+    });
+    root.replaceChildren(tabs,make('p','탭을 옮겨도 입력한 내용은 유지됩니다. 변경 내용 저장을 누르면 세 탭의 내용이 함께 저장됩니다.','edit-help'),...panels);select(aboutTab);
   }
   function prepare(kind,data,base){const d={...structuredClone(base[kind]),...structuredClone(data)};
     if(kind==='about'){
