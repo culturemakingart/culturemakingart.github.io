@@ -3,9 +3,11 @@ window.SiteAPI = (() => {
   const base='https://jbxpbvkldgncrdlzqiol.supabase.co';
   const key='sb_publishable_FjdoZsQiqTLugIjHq-kMMg_JGpAAvdP';
   const sessionKey='culturemakingart.admin.session';
-  let session; try { session=JSON.parse(sessionStorage.getItem(sessionKey)||'null'); } catch { session=null; }
-  function remember(s){session=s; if(s)sessionStorage.setItem(sessionKey,JSON.stringify(s));else sessionStorage.removeItem(sessionKey);}
-  async function token(){
+  let session,persistent=false;
+  try {persistent=!!localStorage.getItem(sessionKey);session=JSON.parse(localStorage.getItem(sessionKey)||sessionStorage.getItem(sessionKey)||'null');}catch{session=null;}
+  function remember(s,keep=persistent){session=s;persistent=keep;sessionStorage.removeItem(sessionKey);localStorage.removeItem(sessionKey);if(s)(keep?localStorage:sessionStorage).setItem(sessionKey,JSON.stringify(s));}
+  async function refreshToken(){
+    if(persistent){try{session=JSON.parse(localStorage.getItem(sessionKey)||'null');}catch{session=null;}}
     if(!session)return null;
     if(session.expires_at*1000<Date.now()+60000){
       const r=await fetch(base+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:key,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:session.refresh_token})});
@@ -14,6 +16,7 @@ window.SiteAPI = (() => {
     }
     return session.access_token;
   }
+  async function token(){return navigator.locks?navigator.locks.request(sessionKey,refreshToken):refreshToken();}
   async function request(route,{method='GET',body,headers={}}={}){
     const authToken=await token();
     const r=await fetch(base+route,{method,headers:{apikey:key,...(authToken?{Authorization:'Bearer '+authToken}:{}),...(body instanceof Blob?{}:{'Content-Type':'application/json'}),...headers},body:body===undefined?undefined:body instanceof Blob?body:JSON.stringify(body)});
@@ -29,6 +32,12 @@ window.SiteAPI = (() => {
       if(h.has('access_token')){remember({access_token:h.get('access_token'),refresh_token:h.get('refresh_token'),expires_at:Math.floor(Date.now()/1000)+Number(h.get('expires_in')||3600)});history.replaceState(null,'',location.pathname);}
     },
     async login(email){return request('/auth/v1/otp?redirect_to='+encodeURIComponent(location.origin+'/admin/'),{method:'POST',body:{email,create_user:true}});},
+    async loginPassword(email,password,keep){
+      const r=await fetch(base+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:key,'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+      if(!r.ok)throw Error(r.status===429?'로그인 시도가 많습니다. 잠시 후 다시 시도해주세요.':'이메일 또는 비밀번호를 확인해주세요. 처음 이용한다면 아래 비밀번호 설정 안내를 열어주세요.');
+      const s=await r.json();s.expires_at=Math.floor(Date.now()/1000)+s.expires_in;remember(s,keep);
+    },
+    async setPassword(password,keep){await request('/auth/v1/user',{method:'PUT',body:{password}});remember(session,keep);},
     async logout(){try{await request('/auth/v1/logout',{method:'POST'});}finally{remember(null);}},
     content:()=>request('/rest/v1/site_content?select=*&order=id'),
     async save(row){return request('/rest/v1/site_content?on_conflict=id',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:row});},
