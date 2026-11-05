@@ -679,3 +679,58 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   #partner-artists > .member strong::before { width: 8px; height: 8px; }
   #partner-artists > .member .member-bio p { font-size: 13px; line-height: 1.6; }
 }
+
+/* ---------- ABOUT: 사진이 아직 없는 구성원 ----------
+   '사진 준비 중' 빈 상자 대신 테두리 카드로 보여줍니다. 사진을 올리면 원래 사진 카드로 돌아갑니다. */
+[aria-labelledby="h-members"] .member:not(:has(.member-photo img)) {
+  grid-template-columns: minmax(0, 1fr); gap: 10px; align-content: start;
+  padding: 26px 26px 28px; background: var(--paper); border: var(--line);
+  box-shadow: 6px 6px 0 var(--sky);
+}
+[aria-labelledby="h-members"] .member:not(:has(.member-photo img)):nth-child(3n+2) { box-shadow: 6px 6px 0 var(--blush); }
+[aria-labelledby="h-members"] .member:not(:has(.member-photo img)):nth-child(3n+3) { box-shadow: 6px 6px 0 var(--pollen); }
+[aria-labelledby="h-members"] .member .member-photo:not(:has(img)) { display: none; }
+.member .member-bio p { white-space: pre-line; }
+[aria-labelledby="h-members"] .member > .ph:not(:has(img)) { display: none; }
+@media (max-width: 600px) {
+  [aria-labelledby="h-members"] .member:not(:has(.member-photo img)) { padding: 20px 18px 22px; box-shadow: 4px 4px 0 var(--sky); }
+}
+
+/* ---------- ABOUT: 연혁 (항목이 많을 때 촘촘하게) ---------- */
+.history li { grid-template-columns: 110px minmax(0, 1fr) 300px 140px; padding: 16px 8px; border-bottom: var(--dash); }
+.history li:last-child { border-bottom: var(--line); }
+.history__name { font-size: 16px; line-height: 1.5; }
+.history__org { font-size: 13.5px; line-height: 1.55; }
+@media (max-width: 900px) {
+  .history li { grid-template-columns: 1fr; padding: 14px 4px; }
+}
+
+/* ---------- PROJECTS: 기록이 아직 없을 때 ---------- */
+.card-grid > p:only-child {
+  grid-column: 1 / -1; display: grid; justify-items: center; text-align: center;
+  padding: 56px 32px; border: 2px dashed var(--ink);
+  font-family: var(--font-pixel); font-size: 18px; line-height: 1.6;
+}
+@media (max-width: 600px) { .card-grid > p:only-child { padding: 36px 20px; font-size: 16px; } }
+
+/* ---------- CONTACT: 사이트 문의 양식 ---------- */
+.inquiry-form {
+  margin-top: 28px; padding: 36px; display: grid; gap: 20px;
+  background: var(--cream); border: var(--line); box-shadow: 8px 8px 0 var(--sky);
+}
+.inquiry-form label { margin: 0; font-size: 14px; font-weight: 600; gap: 8px; }
+.inquiry-form input:not([type=checkbox]), .inquiry-form textarea {
+  font-size: 16px; min-height: 52px; padding: 12px 16px; border: var(--line); border-radius: 0;
+  background: var(--paper); color: var(--ink); -webkit-appearance: none; appearance: none;
+}
+.inquiry-form textarea { min-height: 180px; line-height: 1.7; }
+.inquiry-form input:not([type=checkbox]):focus-visible, .inquiry-form textarea:focus-visible { outline: 3px dashed var(--petal); outline-offset: 2px; }
+.inquiry-form > p:not([id]) { font-size: 13px; line-height: 1.7; color: var(--ink-soft); padding-top: 16px; border-top: var(--dash); }
+.inquiry-form .consent { display: flex; align-items: center; gap: 10px; font-size: 15px; min-height: 44px; }
+.inquiry-form .consent input { width: 20px; height: 20px; margin: 0; accent-color: var(--ink); flex: none; }
+.inquiry-form button[type=submit] { justify-self: start; }
+.inquiry-form #inquiry-status { font-size: 14px; font-weight: 600; color: var(--leaf-deep); min-height: 1.5em; }
+@media (max-width: 600px) {
+  .inquiry-form { padding: 22px 18px; gap: 16px; box-shadow: 5px 5px 0 var(--sky); }
+  .inquiry-form button[type=submit] { justify-self: stretch; }
+}
