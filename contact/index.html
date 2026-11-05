@@ -14,6 +14,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600&amp;display=swap">
 <link rel="stylesheet" href="../assets/css/style.css">
 <script src="../assets/js/main.js" defer></script>
+<script src="/assets/js/site-api.js" defer></script>
+<script src="/assets/js/site-content.js" defer></script>
+<script src="/assets/js/contact-form.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">본문 바로가기</a>
@@ -64,6 +67,16 @@
     </div>
   </div>
 </section>
+<section class="section section--paper"><div class="container" style="max-width:760px"><h2 class="title-section">사이트에서 문의 보내기</h2><form id="inquiry-form" class="inquiry-form">
+<label>이름<input name="name" autocomplete="name" maxlength="100" required></label>
+<label>기관명 (선택)<input name="organization" autocomplete="organization" maxlength="200"></label>
+<label>답변받을 이메일<input name="email" type="email" autocomplete="email" maxlength="254" required></label>
+<label>문의 내용<textarea name="message" minlength="10" maxlength="5000" rows="8" required></textarea></label>
+<div hidden aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<p>문화제작예술소는 문의 응대 목적으로 이름, 이메일, 기관명(선택), 문의 내용을 수집합니다. 문의 내역은 자동 삭제 없이 보관합니다. 삭제를 원하시면 culturemakingart@gmail.com으로 요청해주세요. 동의를 거부할 수 있으며 이 경우 온라인 문의 접수가 제한됩니다.</p>
+<label class="consent"><input type="checkbox" name="consent" required> 위 개인정보 수집·이용에 동의합니다.</label>
+<button type="submit" class="btn btn--primary">문의 접수하기</button><p id="inquiry-status" role="status" aria-live="polite"></p>
+</form></div></section>
 <!--
   공식 외부 채널(인스타그램 등)과 주소는 현행 정보를 확인한 뒤 이 자리에 추가합니다.
   기존 홈페이지 표기 주소: 경기도 남양주시 다산순환로20, 다산현대프리미엄캠퍼스몰 A-717호

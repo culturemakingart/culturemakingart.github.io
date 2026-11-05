@@ -34,6 +34,10 @@
     });
   });
   if (input) input.addEventListener('input', update);
+  document.addEventListener('site:content', function () {
+    cards = Array.prototype.slice.call(list.querySelectorAll('[data-group]'));
+    update();
+  });
 
   var reset = document.getElementById('program-reset');
   if (reset) reset.addEventListener('click', function () {

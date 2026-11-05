@@ -1,3 +1,7 @@
+# 이전 초안 생성기. 최신 사이트는 정적 HTML과 CMS 데이터를 사용합니다.
+import sys
+if '--legacy-regenerate' not in sys.argv:
+    raise SystemExit('이전 초안 생성기입니다. 실행하면 최신 기능을 덮어씁니다. 의도한 경우에만 --legacy-regenerate 옵션을 사용하세요.')
 import json, os
 from urllib.parse import quote
 from html import escape
@@ -104,6 +108,7 @@ def page(path, active, title, desc, body, scripts=(), noindex=False):
 </body>
 </html>
 '''
+    html = html.replace('</head>', '<script src="/assets/js/site-api.js" defer></script><script src="/assets/js/site-content.js" defer></script></head>')
     out = os.path.join(ROOT, path)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, 'w', encoding='utf-8').write(html)
