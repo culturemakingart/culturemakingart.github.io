@@ -55,6 +55,10 @@ window.AdminSections=(()=>{
       function updatePreview(){const r=candidates.find(r=>r.id===select.value);const src=safeURL(r?.data.image||state.image);selectedPreview.hidden=!src;if(src)selectedPreview.src=src;selectedPreview.alt=state.alt||'선택한 대표 사진';}
       select.onchange=()=>{const r=candidates.find(r=>r.id===select.value);state.imageSource=r?{id:r.id,kind:r.kind}:null;if(r){state.image=r.data.image;state.alt=r.data.alt||r.data.title||'';}updatePreview();notify();};
       function show(){refreshDirect();direct.hidden=state.imageMode!=='upload';linked.hidden=state.imageMode!=='reference';updatePreview();}show();
+      const projectSection=section('메인 이미지 아래 프로젝트 버튼','소개할 프로젝트를 선택하세요. 자동 연결을 선택하면 메인 이미지에 연동한 프로젝트로 이동하고, 연결된 프로젝트가 없으면 프로젝트 목록으로 이동합니다.');
+      const projectLabel=make('label','버튼에 연결할 프로젝트'),projectSelect=make('select');const auto=make('option','자동 연결 (메인 이미지 기준)');auto.value='';projectSelect.append(auto);
+      for(const r of rows.filter(r=>r.kind==='project'&&r.published).sort(SiteOrder.records)){const o=make('option',(r.data.year?r.data.year+' · ':'')+(r.data.title||r.id));o.value=r.id;projectSelect.append(o);}
+      if(state.featuredProjectId&&![...projectSelect.options].some(o=>o.value===state.featuredProjectId)){const old=make('option','기존 선택 · 현재 비공개 (프로젝트 목록으로 연결)');old.value=state.featuredProjectId;projectSelect.append(old);}projectSelect.value=state.featuredProjectId||'';projectSelect.onchange=()=>{state.featuredProjectId=projectSelect.value;notify();};projectLabel.append(projectSelect);projectSection.append(projectLabel);
       return;
     }
     const intro=section('단체 소개 본문','현재 사이트의 내용을 불러왔습니다. 각 칸을 수정하면 해당 영역에 반영됩니다.');field(intro,'페이지 제목',state,'title',{area:true,required:true});field(intro,'단체 소개 글',state,'summary',{area:true});
