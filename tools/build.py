@@ -46,7 +46,7 @@ BYSLUG = {p['slug']: p for p in PROGRAMS}
 PH_BG = ['bg-sky', 'bg-blush', 'bg-pollen', 'bg-leaf']
 
 # ---------------- 공통 틀 ----------------
-NAV = [('HOME', ''), ('ABOUT', 'about/'), ('PROJECTS', 'projects/'), ('COLLABORATION', 'collaboration/'), ('CONTACT', 'contact/')]
+NAV = [('HOME', ''), ('ABOUT', 'about/'), ('PROJECTS', 'projects/'), ('PROGRAMS', 'collaboration/'), ('CONTACT', 'contact/')]
 
 def page(path, active, title, desc, body, scripts=(), noindex=False):
     depth = path.count('/')  # 'about/index.html' -> 1
