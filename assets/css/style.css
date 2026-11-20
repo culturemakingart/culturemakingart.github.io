@@ -734,3 +734,4 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .inquiry-form { padding: 22px 18px; gap: 16px; box-shadow: 5px 5px 0 var(--sky); }
   .inquiry-form button[type=submit] { justify-self: stretch; }
 }
+.home-social{display:flex;flex-wrap:wrap;gap:14px}.home-social[hidden],.home-social a[hidden]{display:none}.home-social .btn{font-size:15px;padding:12px 18px;box-shadow:3px 3px 0 var(--sky)}.home-social a[data-social=instagram]{box-shadow:3px 3px 0 var(--blush)}

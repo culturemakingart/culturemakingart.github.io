@@ -40,6 +40,7 @@ window.AdminSections=(()=>{
   function mount(kind,data,rows,parent,callbacks){state=structuredClone(data);root=parent;notify=callbacks.changed;busy=callbacks.busy;api=callbacks.api;root.replaceChildren();
     if(kind==='home'){
       const copy=section('첫 화면 문구','홈에 표시할 제목과 소개를 수정합니다.');field(copy,'메인 제목',state,'title',{area:true,required:true});field(copy,'소개 문구',state,'summary',{area:true});
+      const social=section('인스타그램·유튜브 버튼','공식 계정 주소를 입력하면 홈의 소개 버튼 아래에 표시됩니다. 비워두면 해당 버튼은 표시하지 않습니다.');field(social,'인스타그램 주소',state,'instagramUrl').type='url';field(social,'유튜브 채널 주소',state,'youtubeUrl').type='url';
       const media=section('메인 이미지','직접 파일을 올리거나, 공개된 프로그램·프로젝트의 대표 사진을 선택하세요.');
       const tabs=make('div',undefined,'image-modes'),direct=make('div'),linked=make('div');
       state.imageMode=state.imageMode||'upload';
@@ -82,6 +83,7 @@ window.AdminSections=(()=>{
     }return d;
   }
   function read(){const d=structuredClone(state);d.editorVersion=2;if(d.imageMode!=='reference')d.imageSource=null;
+    for(const key of ['instagramUrl','youtubeUrl'])if(d[key]){d[key]=clean(d[key]);if(!d[key])continue;let u;try{u=new URL(d[key]);}catch{throw Error('소셜 채널 주소를 https://로 시작하는 전체 주소로 입력해주세요.');}const host=u.hostname.toLowerCase(),valid=key==='instagramUrl'?host==='instagram.com'||host.endsWith('.instagram.com'):['youtube.com','youtu.be'].some(h=>host===h||host.endsWith('.'+h));if(u.protocol!=='https:'||!valid||u.username||u.password)throw Error('인스타그램 또는 유튜브의 https:// 주소를 입력해주세요.');}
     if(d.imageMode==='reference'&&!d.imageSource?.id)throw Error('홈에 연결할 프로그램 또는 프로젝트를 선택해주세요.');
     for(const key of ['aimsList','membersList','partnersList','historyList'])if(d[key])d[key]=d[key].filter(o=>Object.values(o).some(v=>typeof v==='string'&&v.trim()));
     if(d.partnersList)d.partnersList.sort(SiteOrder.people);
