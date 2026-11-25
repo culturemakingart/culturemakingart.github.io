@@ -237,6 +237,326 @@
     } }
   ];
       }
+    },
+    'unfamiliar-space': {
+      name: 'hanji-casting.exe',
+      steps: [
+        ['한지 캐스팅이란?', '한지, 스텐실 붓, 분무기 같은 재료와 한지 캐스팅 기법을 알아보고, 이 기법으로 작업하는 작가를 소개해요.'],
+        ['일상의 공간 살펴보기', '매일 지내는 교실의 모서리, 문틀, 손잡이처럼 그냥 지나치던 곳을 낯설게 다시 살펴봐요.'],
+        ['한지 캐스팅 진행하기', '고른 곳에 한지를 대고 분무한 뒤, 스텐실 붓으로 두들겨 표면을 떠내요. 말린 다음 뜯어내고 다듬어요.'],
+        ['결과물 만들기', '떠낸 한지들을 모아 하나의 작품으로 전시해요. 결과물의 형태는 기관과 협의해 정해요.']
+      ],
+      stage: `
+        <!-- 01 한지 캐스팅이란? -->
+        <svg class="cm-scene" data-scene="0" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid meet">
+          <rect class="cm-dots" width="480" height="300"/>
+          <rect x="44" y="12" width="150" height="28" fill="var(--ink, #24331A)"/>
+          <text x="119" y="31" text-anchor="middle" class="cm-svgtext" style="font-size:13px;fill:#FFF8EC">HANJI CASTING</text>
+          <g class="js-card">
+            <rect x="51" y="59" width="118" height="158" fill="var(--pollen, #F6C94D)"/>
+            <rect x="44" y="52" width="118" height="158" fill="#fff" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+            <path d="M64,74 L144,70 L146,160 L62,164 Z" fill="#FFFDF7" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <path d="M130,70 L146,70 L146,86 Z" fill="#EFE4D0" stroke="var(--ink, #24331A)" stroke-width="2" stroke-linejoin="round"/>
+            <g fill="none" stroke="#DCCFB6" stroke-width="1.5" stroke-linecap="round">
+              <path d="M74,92 q10,-6 20,2 t22,0"/><path d="M84,122 q10,6 24,-2 t18,4"/><path d="M72,146 q12,-6 22,0"/>
+            </g>
+            <line x1="44" y1="176" x2="162" y2="176" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <text x="103" y="198" text-anchor="middle" class="cm-svgtext">한지</text>
+          </g>
+          <g class="js-card">
+            <rect x="187" y="59" width="118" height="158" fill="var(--blush, #F29BB9)"/>
+            <rect x="180" y="52" width="118" height="158" fill="#fff" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+            <g class="js-brush1">
+              <rect x="232" y="68" width="14" height="52" fill="#C98E6A" stroke="var(--ink, #24331A)" stroke-width="2"/>
+              <rect x="228" y="120" width="22" height="14" fill="#A3ACB4" stroke="var(--ink, #24331A)" stroke-width="2"/>
+              <rect x="227" y="134" width="24" height="26" fill="#E3BE88" stroke="var(--ink, #24331A)" stroke-width="2"/>
+              <path d="M233,138 v18 M239,138 v18 M245,138 v18" stroke="#A88A63" stroke-width="1.5"/>
+            </g>
+            <line x1="180" y1="176" x2="298" y2="176" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <text x="239" y="198" text-anchor="middle" class="cm-svgtext">스텐실 붓</text>
+          </g>
+          <g class="js-card">
+            <rect x="323" y="59" width="118" height="158" fill="var(--sky, #A7C7E4)"/>
+            <rect x="316" y="52" width="118" height="158" fill="#fff" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+            <rect x="341" y="70" width="36" height="18" fill="var(--petal, #E4568B)" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <rect x="377" y="74" width="10" height="7" fill="var(--ink, #24331A)"/>
+            <rect x="363" y="88" width="8" height="16" fill="var(--petal, #E4568B)" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <rect x="349" y="88" width="16" height="12" fill="#fff" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <rect x="339" y="100" width="38" height="60" fill="var(--sky, #A7C7E4)" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <rect x="345" y="110" width="6" height="22" fill="#fff" opacity=".8"/>
+            <g class="js-mist" fill="var(--sky, #A7C7E4)"></g>
+            <line x1="316" y1="176" x2="434" y2="176" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <text x="375" y="198" text-anchor="middle" class="cm-svgtext">분무기</text>
+          </g>
+          <g class="js-banner">
+            <rect x="44" y="230" width="390" height="36" fill="var(--pollen, #F6C94D)" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+            <text x="239" y="253" text-anchor="middle" class="cm-svgtext">작가 소개 · 한지 캐스팅 기법 알아보기</text>
+          </g>
+        </svg>
+
+        <!-- 02 일상의 공간 살펴보기 -->
+        <svg class="cm-scene" data-scene="1" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid meet">
+          <rect width="480" height="300" fill="#FFF8EC"/>
+          <rect y="232" width="480" height="68" fill="#E3BE88"/>
+          <path d="M0,232 H480 M0,254 H480 M0,278 H480" stroke="#C99A5E" stroke-width="2"/>
+          <line x1="0" y1="232" x2="480" y2="232" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+          <!-- 창문 -->
+          <rect x="40" y="40" width="150" height="130" fill="var(--sky, #A7C7E4)" stroke="var(--ink, #24331A)" stroke-width="3"/>
+          <path d="M115,40 V170 M40,105 H190" stroke="var(--ink, #24331A)" stroke-width="3"/>
+          <rect x="54" y="52" width="16" height="6" fill="#fff" opacity=".8"/>
+          <!-- 문 -->
+          <rect x="356" y="52" width="88" height="180" fill="#C98E6A" stroke="var(--ink, #24331A)" stroke-width="3"/>
+          <rect x="368" y="66" width="64" height="62" fill="none" stroke="#A86F4E" stroke-width="3"/>
+          <circle cx="374" cy="156" r="9" fill="#A3ACB4" stroke="var(--ink, #24331A)" stroke-width="2"/>
+          <circle cx="374" cy="156" r="4" fill="#C9D0D6" stroke="var(--ink, #24331A)" stroke-width="1.5"/>
+          <!-- 책상·의자 -->
+          <rect x="212" y="174" width="6" height="58" fill="#A3ACB4" stroke="var(--ink, #24331A)" stroke-width="2"/>
+          <rect x="284" y="174" width="6" height="58" fill="#A3ACB4" stroke="var(--ink, #24331A)" stroke-width="2"/>
+          <rect x="204" y="160" width="94" height="14" fill="#6B747D" stroke="var(--ink, #24331A)" stroke-width="2"/>
+          <rect x="196" y="150" width="110" height="12" fill="#E3BE88" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+          <rect x="332" y="146" width="8" height="50" fill="#34465E" stroke="var(--ink, #24331A)" stroke-width="2"/>
+          <rect x="298" y="188" width="44" height="9" fill="#34465E" stroke="var(--ink, #24331A)" stroke-width="2"/>
+          <path d="M304,197 L300,232 M336,197 L340,232" stroke="var(--ink, #24331A)" stroke-width="3"/>
+          <rect x="206" y="12" width="148" height="28" fill="var(--pollen, #F6C94D)" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+          <text x="280" y="31" text-anchor="middle" class="cm-svgtext" style="font-size:13px">익숙한 곳을 낯설게</text>
+          <g fill="none" stroke="var(--petal, #E4568B)" stroke-width="3" stroke-dasharray="5 4">
+            <circle class="js-ring" cx="46" cy="46" r="22" opacity="0"/>
+            <circle class="js-ring" cx="198" cy="152" r="22" opacity="0"/>
+            <circle class="js-ring" cx="374" cy="156" r="22" opacity="0"/>
+          </g>
+          <g class="js-mag">
+            <rect x="14" y="10" width="10" height="34" transform="rotate(-45 19 27)" fill="var(--pollen, #F6C94D)" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+            <circle r="24" fill="#fff" fill-opacity=".35" stroke="var(--ink, #24331A)" stroke-width="3.5"/>
+            <path d="M-12,-8 q4,-8 12,-10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+          </g>
+        </svg>
+
+        <!-- 03 한지 캐스팅 진행하기 -->
+        <svg class="cm-scene" data-scene="2" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid meet">
+          <rect width="480" height="300" fill="#FFF8EC"/>
+          <rect x="60" y="-4" width="360" height="308" fill="#C98E6A" stroke="var(--ink, #24331A)" stroke-width="3"/>
+          <rect x="92" y="22" width="296" height="256" fill="none" stroke="#A86F4E" stroke-width="3"/>
+          <circle cx="240" cy="160" r="52" fill="#A3ACB4" stroke="var(--ink, #24331A)" stroke-width="3"/>
+          <circle cx="240" cy="154" r="30" fill="#C9D0D6" stroke="var(--ink, #24331A)" stroke-width="3"/>
+          <circle cx="240" cy="198" r="4" fill="var(--ink, #24331A)"/><rect x="238" y="198" width="4" height="8" fill="var(--ink, #24331A)"/>
+          <rect class="js-shadow3" x="140" y="58" width="200" height="204" fill="var(--ink, #24331A)" opacity="0"/>
+          <g class="js-paper3">
+            <rect class="js-p3fill" x="140" y="58" width="200" height="204" fill="#FFFDF7" stroke="var(--ink, #24331A)" stroke-width="2" opacity=".94"/>
+            <g fill="none" stroke="#DCCFB6" stroke-width="1.5" stroke-linecap="round">
+              <path d="M152,76 q10,-6 20,2 t22,0"/><path d="M290,96 q10,6 22,-2"/><path d="M156,240 q12,-6 22,0 t20,-2"/><path d="M290,236 q8,6 18,0"/>
+            </g>
+            <g class="js-relief" fill="none" opacity="0">
+              <circle cx="240" cy="160" r="52" stroke="#CDBFA2" stroke-width="4"/>
+              <circle cx="240" cy="154" r="30" fill="#F1E9DA" stroke="#BFAF8E" stroke-width="3.5"/>
+              <path d="M222,140 a24,24 0 0 1 22,-10" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+              <path d="M186,176 a56,56 0 0 0 40,34" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="240" cy="198" r="4" fill="#CDBFA2"/><rect x="238" y="198" width="4" height="8" fill="#CDBFA2"/>
+            </g>
+          </g>
+          <g class="js-mist3" fill="var(--sky, #A7C7E4)"></g>
+          <g class="js-heat" fill="none" stroke="#FFF8EC" stroke-width="3" stroke-linecap="round" opacity="0">
+            <path d="M190,48 q-6,-8 0,-16 t0,-16"/><path d="M240,44 q-6,-8 0,-16 t0,-16"/><path d="M290,48 q-6,-8 0,-16 t0,-16"/>
+          </g>
+          <g class="js-spray" opacity="0">
+            <g transform="translate(410 34)">
+              <rect x="-18" y="30" width="36" height="58" fill="var(--sky, #A7C7E4)" stroke="var(--ink, #24331A)" stroke-width="2"/>
+              <rect x="-8" y="18" width="16" height="12" fill="#fff" stroke="var(--ink, #24331A)" stroke-width="2"/>
+              <rect x="-18" y="0" width="36" height="18" fill="var(--petal, #E4568B)" stroke="var(--ink, #24331A)" stroke-width="2"/>
+              <rect x="-28" y="4" width="10" height="7" fill="var(--ink, #24331A)"/>
+              <rect x="-12" y="18" width="8" height="16" fill="var(--petal, #E4568B)" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            </g>
+          </g>
+          <g class="js-brush3" opacity="0">
+            <rect x="-7" y="-92" width="14" height="54" fill="#C98E6A" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <rect x="-11" y="-38" width="22" height="14" fill="#A3ACB4" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <rect x="-12" y="-24" width="24" height="24" fill="#E3BE88" stroke="var(--ink, #24331A)" stroke-width="2"/>
+          </g>
+          <rect x="14" y="14" width="112" height="30" fill="var(--pollen, #F6C94D)" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+          <text class="js-phase cm-svgtext" x="70" y="34" text-anchor="middle">한지 대기</text>
+        </svg>
+
+        <!-- 04 결과물 만들기 -->
+        <svg class="cm-scene" data-scene="3" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid meet">
+          <rect class="js-sky4" width="480" height="300" fill="#DCE8F2"/>
+          <path d="M30,0 V252 M120,0 V252 M360,0 V252 M450,0 V252 M0,110 H480" stroke="#B8C6D3" stroke-width="3"/>
+          <rect y="252" width="480" height="48" fill="#E3BE88"/>
+          <path d="M0,270 H480 M0,288 H480" stroke="#C99A5E" stroke-width="2"/>
+          <line x1="0" y1="252" x2="480" y2="252" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+          <g class="js-front"></g>
+          <g class="js-desk4" opacity="0">
+            <rect x="206" y="196" width="5" height="56" fill="#A3ACB4" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <rect x="259" y="196" width="5" height="56" fill="#A3ACB4" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <rect x="200" y="184" width="70" height="12" fill="#6B747D" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <rect x="194" y="176" width="82" height="10" fill="#E3BE88" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+            <rect x="292" y="178" width="7" height="42" fill="#34465E" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <rect x="270" y="212" width="30" height="8" fill="#34465E" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <path d="M274,220 L272,252 M296,220 L298,252" stroke="var(--ink, #24331A)" stroke-width="3"/>
+          </g>
+          <g class="js-left"></g>
+          <g class="js-right"></g>
+          <g class="js-sticker" transform="translate(410 56)" opacity="0">
+            <g class="js-sticker-in">
+              <rect x="-40" y="-17" width="80" height="34" fill="var(--petal, #E4568B)" stroke="var(--ink, #24331A)" stroke-width="2.5"/>
+              <text y="6" text-anchor="middle" class="cm-svgtext" fill="#FFF8EC">완성!</text>
+            </g>
+          </g>
+          <rect x="14" y="14" width="116" height="28" fill="var(--ink, #24331A)"/>
+          <text x="72" y="33" text-anchor="middle" class="cm-svgtext" style="font-size:13px;fill:#FFF8EC">EXHIBITION</text>
+        </svg>`,
+      build: function (h) {
+        var q = h.q, qa = h.qa, ease = h.ease, clamp = h.clamp, lerpColor = h.lerpColor;
+        var SVGNS = 'http://www.w3.org/2000/svg';
+        var WOOD = '#B98A5E', INK = 'var(--ink, #24331A)';
+
+        // 결과물 장면: 나무 프레임과 한지 조각들을 만든다 (사진 속 3면 부스 형태)
+        var motifs = [
+          '<circle cx="0" cy="0" r="13" fill="none" stroke="#CDBFA2" stroke-width="3"/>',
+          '<path d="M0,-14 V14 M-14,0 H14 M-10,-10 L10,10 M-10,10 L10,-10" stroke="#CDBFA2" stroke-width="2.5"/>',
+          '<path d="M-18,-8 L-4,2 L6,-10 L18,4 M-14,10 L2,6 L14,14" fill="none" stroke="#D8CCB2" stroke-width="2"/>',
+          '<rect x="-14" y="-10" width="28" height="20" fill="none" stroke="#CDBFA2" stroke-width="2.5"/>',
+          '<circle cx="-4" cy="2" r="8" fill="none" stroke="#CDBFA2" stroke-width="2.5"/><circle cx="10" cy="-6" r="4" fill="none" stroke="#CDBFA2" stroke-width="2"/>',
+          '<path d="M-18,6 q9,-14 18,0 t18,0" fill="none" stroke="#D8CCB2" stroke-width="2.5"/>'
+        ];
+        var KNOB = 7; // 3단계에서 뜬 손잡이 조각이 들어갈 칸
+        var front = q(3, '.js-front'), html = '';
+        var fx = 150, fy = 26, cw = 60, ch = 56, k = 0;
+        for (var r = 0; r < 4; r++) for (var c = 0; c < 3; c++, k++) {
+          var x = fx + c * cw, y = fy + r * ch, cx = x + cw / 2, cy = y + ch / 2;
+          var motif = k === KNOB
+            ? '<circle r="17" fill="none" stroke="#CDBFA2" stroke-width="3"/><circle cy="-2" r="9" fill="#F1E9DA" stroke="#BFAF8E" stroke-width="2.5"/>'
+            : motifs[(k * 5) % motifs.length];
+          html += '<g class="js-cell" opacity="0"><rect class="js-hj" x="' + (x + 3) + '" y="' + (y + 3) + '" width="' + (cw - 6) + '" height="' + (ch - 6) + '" fill="#FFFDF7"/>' +
+            '<g transform="translate(' + cx + ' ' + cy + ')">' + motif + '</g>' +
+            (k === KNOB ? '<rect x="' + (x + 3) + '" y="' + (y + 3) + '" width="' + (cw - 6) + '" height="' + (ch - 6) + '" fill="none" stroke="var(--petal, #E4568B)" stroke-width="3"/>' : '') + '</g>';
+        }
+        html += '<rect x="' + fx + '" y="' + fy + '" width="' + (cw * 3) + '" height="' + (ch * 4) + '" fill="none" stroke="' + WOOD + '" stroke-width="7"/>';
+        for (c = 1; c < 3; c++) html += '<line x1="' + (fx + c * cw) + '" y1="' + fy + '" x2="' + (fx + c * cw) + '" y2="' + (fy + ch * 4) + '" stroke="' + WOOD + '" stroke-width="5"/>';
+        for (r = 1; r < 4; r++) html += '<line x1="' + fx + '" y1="' + (fy + r * ch) + '" x2="' + (fx + cw * 3) + '" y2="' + (fy + r * ch) + '" stroke="' + WOOD + '" stroke-width="5"/>';
+        html += '<rect x="' + (fx - 4) + '" y="' + (fy - 4) + '" width="' + (cw * 3 + 8) + '" height="' + (ch * 4 + 8) + '" fill="none" stroke="' + INK + '" stroke-width="2"/>';
+        front.innerHTML = html;
+
+        // 옆면 패널 (원근감)
+        function side(el, mirror) {
+          var P = function (u, v) {
+            var x = 66 + 84 * u, top = 50 - 24 * u, bot = 268 - 16 * u, y = top + (bot - top) * v;
+            return [mirror ? 480 - x : x, y];
+          };
+          var s = '', i, j;
+          for (i = 0; i < 2; i++) for (j = 0; j < 4; j++) {
+            var a = P(i / 2 + 0.03, j / 4 + 0.02), b = P((i + 1) / 2 - 0.03, j / 4 + 0.02), cc = P((i + 1) / 2 - 0.03, (j + 1) / 4 - 0.02), d = P(i / 2 + 0.03, (j + 1) / 4 - 0.02);
+            s += '<g class="js-cell" opacity="0"><polygon class="js-hj" points="' + [a, b, cc, d].join(' ') + '" fill="#F7F1E4"/>' +
+              '<path d="M' + P(i / 2 + 0.12, j / 4 + 0.08) + ' Q' + P(i / 2 + 0.25, j / 4 + 0.16) + ' ' + P(i / 2 + 0.38, j / 4 + 0.1) + '" fill="none" stroke="#D8CCB2" stroke-width="2"/></g>';
+          }
+          var o = [P(0, 0), P(1, 0), P(1, 1), P(0, 1)];
+          s += '<polygon points="' + o.join(' ') + '" fill="none" stroke="' + WOOD + '" stroke-width="7"/>';
+          s += '<line x1="' + P(0.5, 0)[0] + '" y1="' + P(0.5, 0)[1] + '" x2="' + P(0.5, 1)[0] + '" y2="' + P(0.5, 1)[1] + '" stroke="' + WOOD + '" stroke-width="5"/>';
+          for (j = 1; j < 4; j++) s += '<line x1="' + P(0, j / 4)[0] + '" y1="' + P(0, j / 4)[1] + '" x2="' + P(1, j / 4)[0] + '" y2="' + P(1, j / 4)[1] + '" stroke="' + WOOD + '" stroke-width="5"/>';
+          s += '<polygon points="' + o.join(' ') + '" fill="none" stroke="' + INK + '" stroke-width="2" transform="translate(0 0)"/>';
+          el.innerHTML = s;
+        }
+        side(q(3, '.js-left'), false);
+        side(q(3, '.js-right'), true);
+        // 칸이 채워지는 순서: 앞면 12칸 → 옆면 16칸
+        var cells = [].slice.call(q(3, '.js-front').querySelectorAll('.js-cell'))
+          .concat([].slice.call(q(3, '.js-left').querySelectorAll('.js-cell')))
+          .concat([].slice.call(q(3, '.js-right').querySelectorAll('.js-cell')));
+        var hjs = [].slice.call(qa(3, '.js-hj'));
+
+        function sticker(i, t0, t) {
+          var s = ease((t - t0) / 300);
+          q(i, '.js-sticker').setAttribute('opacity', s);
+          q(i, '.js-sticker-in').setAttribute('transform', 'rotate(-8) scale(' + (0.6 + 0.4 * s + (s > 0 && s < 1 ? 0.15 * Math.sin(s * Math.PI) : 0)) + ')');
+        }
+
+        return [
+          { dur: 5600, render: function (t) {
+              qa(0, '.js-card').forEach(function (g, i) {
+                var e = ease((t - 200 - i * 650) / 450);
+                g.setAttribute('transform', 'translate(0 ' + (26 * (1 - e)) + ')');
+                g.setAttribute('opacity', e);
+              });
+              var on = t > 2300 && t < 4800;
+              q(0, '.js-brush1').setAttribute('transform', 'translate(0 ' + (on ? -Math.abs(Math.sin(t / 110)) * 6 : 0) + ')');
+              var mist = '';
+              if (on) for (var m = 0; m < 7; m++) {
+                var ph = ((t / 600) + m / 7) % 1;
+                mist += '<rect x="' + (388 + ph * 34) + '" y="' + (76 + (m - 3) * ph * 5) + '" width="3" height="3" opacity="' + (1 - ph) + '"/>';
+              }
+              q(0, '.js-mist').innerHTML = mist;
+              var b = ease((t - 2900) / 500);
+              q(0, '.js-banner').setAttribute('transform', 'translate(' + (-30 * (1 - b)) + ' 0)');
+              q(0, '.js-banner').setAttribute('opacity', b);
+          } },
+          { dur: 5600, render: function (t) {
+              var pts = [[240, 96], [46, 46], [198, 152], [374, 156]];
+              var times = [300, 1500, 2700];
+              var pos = pts[0];
+              for (var i = 0; i < 3; i++) {
+                var e = ease((t - times[i]) / 700);
+                if (t >= times[i]) pos = [pts[i][0] + (pts[i + 1][0] - pts[i][0]) * e, pts[i][1] + (pts[i + 1][1] - pts[i][1]) * e];
+                var rg = qa(1, '.js-ring')[i], s = ease((t - times[i] - 800) / 300);
+                rg.setAttribute('opacity', s);
+                rg.style.strokeDashoffset = -t / 40;
+              }
+              var bob = Math.sin(t / 260) * 2;
+              q(1, '.js-mag').setAttribute('transform', 'translate(' + pos[0] + ' ' + (pos[1] + bob) + ')');
+              var last = qa(1, '.js-ring')[2];
+              last.setAttribute('stroke-width', t > 3800 ? 3 + 1.5 * Math.abs(Math.sin(t / 220)) : 3);
+          } },
+          { dur: 6600, render: function (t) {
+              var drop = ease(t / 800);
+              var peel = ease((t - 4800) / 700);
+              q(2, '.js-paper3').setAttribute('transform', 'translate(' + (-16 * peel) + ' ' + (-270 * (1 - drop) - 20 * peel) + ') rotate(' + (-5 * peel) + ' 340 58)');
+              q(2, '.js-shadow3').setAttribute('opacity', 0.18 * peel);
+              // 분무
+              var sprayIn = ease((t - 800) / 250) * (1 - ease((t - 1950) / 250));
+              q(2, '.js-spray').setAttribute('opacity', sprayIn);
+              var mist = '';
+              if (t > 950 && t < 1950) for (var m = 0; m < 14; m++) {
+                var ph = ((t / 500) + m / 14) % 1;
+                var tx = 382 - ph * 150, ty = 41 + ph * (60 + (m % 5 - 2) * 26);
+                mist += '<rect x="' + tx + '" y="' + ty + '" width="4" height="4" opacity="' + (1 - ph * 0.7) + '"/>';
+              }
+              q(2, '.js-mist3').innerHTML = mist;
+              var wet = clamp((t - 1000) / 900) * (1 - ease((t - 4000) / 700));
+              q(2, '.js-p3fill').setAttribute('fill', lerpColor('#FFFDF7', '#E4D8C1', wet));
+              // 두들기기
+              var tp = clamp((t - 2000) / 1900);
+              var brushIn = ease((t - 1900) / 200) * (1 - ease((t - 3900) / 250));
+              var a = tp * Math.PI * 4, rr = 48 * (1 - tp * 0.7);
+              var bx = 240 + rr * Math.cos(a), by = 158 + rr * Math.sin(a) - Math.abs(Math.sin(t / 70)) * 12;
+              var brush = q(2, '.js-brush3');
+              brush.setAttribute('opacity', brushIn);
+              brush.setAttribute('transform', 'translate(' + bx + ' ' + by + ')');
+              q(2, '.js-relief').setAttribute('opacity', ease(tp));
+              // 말리기
+              var heat = clamp((t - 4000) / 700);
+              var hg = q(2, '.js-heat');
+              hg.setAttribute('opacity', heat > 0 && heat < 1 ? Math.sin(heat * Math.PI) : 0);
+              hg.setAttribute('transform', 'translate(0 ' + (-10 * heat) + ')');
+              var phase = t < 900 ? '한지 대기' : t < 1950 ? '분무하기' : t < 3950 ? '두들기기' : t < 4750 ? '말리기' : '뜯어내기';
+              var pt = q(2, '.js-phase');
+              if (pt.textContent !== phase) pt.textContent = phase;
+          } },
+          { dur: 6600, render: function (t) {
+              cells.forEach(function (c, i) {
+                var at = i < 12 ? 300 + i * 150 : 2200 + (i - 12) * 70;
+                var e = ease((t - at) / 250);
+                c.setAttribute('opacity', e);
+              });
+              var d = ease((t - 3500) / 500);
+              var desk = q(3, '.js-desk4');
+              desk.setAttribute('opacity', d);
+              desk.setAttribute('transform', 'translate(0 ' + (16 * (1 - d)) + ')');
+              var glow = ease((t - 4000) / 700);
+              q(3, '.js-sky4').setAttribute('fill', lerpColor('#DCE8F2', '#FFF1CF', glow));
+              hjs.forEach(function (el, i) {
+                el.setAttribute('fill', lerpColor(i < 12 ? '#FFFDF7' : '#F7F1E4', '#FFF6DC', glow * (0.85 + 0.15 * Math.sin(t / 300 + i))));
+              });
+              sticker(3, 4500, t);
+          } }
+        ];
+      }
     }
   };
 
@@ -295,6 +615,8 @@
 }`;
 
   function currentSlug() {
+    var forced = document.documentElement.getAttribute('data-cm-flow');
+    if (forced) return forced; // 미리보기용
     var parts = location.pathname.split('/').filter(Boolean);
     var i = parts.indexOf('programs');
     if (i < 0 || !parts[i + 1]) return null;
