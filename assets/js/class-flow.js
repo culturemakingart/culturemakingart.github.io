@@ -128,24 +128,22 @@
           <circle class="js-glow" cx="240" cy="140" r="150" fill="url(#cmGlow)" opacity="0"/>
           <!-- 한지 -->
           <g class="js-hanji">
-            <path class="js-bust js-paper" fill="#F4EEE2" stroke="var(--ink, #24331A)" stroke-width="2"/>
+            <path class="js-paper" transform="translate(115 52) scale(1.1)" d="M62,52 C70,18 138,8 160,36 C176,56 174,92 166,114 C158,142 138,166 110,168 C80,170 58,146 55,116 C52,92 52,70 62,52 Z" fill="#F4EEE2" stroke="var(--ink, #24331A)" stroke-width="1.8"/>
             <g fill="none" stroke="#DCCFB6" stroke-width="1.5" stroke-linecap="round">
-              <path d="M200,80 q10,-6 20,2 t22,0"/><path d="M250,130 q10,6 24,-2"/>
+              <path d="M214,118 q10,-6 20,2 t22,0"/><path d="M250,130 q10,6 24,-2"/>
               <path d="M196,200 q12,-8 22,0 t20,-2"/><path d="M228,104 q8,6 18,0"/>
             </g>
           </g>
           <!-- 꼬마전구 -->
           <g class="js-lights" fill="#FFE37A">
-            <circle cx="196" cy="100" r="4"/><circle cx="284" cy="76" r="4"/><circle cx="292" cy="140" r="4"/>
-            <circle cx="196" cy="150" r="4"/><circle cx="290" cy="210" r="4"/><circle cx="190" cy="214" r="4"/><circle cx="240" cy="204" r="4"/>
+            <circle cx="196" cy="100" r="4"/><circle cx="270" cy="90" r="4"/><circle cx="292" cy="140" r="4"/>
+            <circle cx="196" cy="150" r="4"/><circle cx="262" cy="200" r="4"/><circle cx="214" cy="212" r="4"/><circle cx="240" cy="204" r="4"/>
           </g>
-          <!-- 나무 틀 (레이저로 딴 얼굴) -->
+          <!-- 나무 틀: 레이저로 딴 얼굴 드로잉이 그대로 무드등 모양 -->
           <g class="js-frame">
-            <path class="js-bust" fill="none" stroke="var(--ink, #24331A)" stroke-width="9" stroke-linejoin="round"/>
-            <path class="js-bust" fill="none" stroke="#A39274" stroke-width="5" stroke-linejoin="round"/>
-            <g transform="translate(174 48) scale(.6)">
-              <path class="cm-face" fill="none" stroke="var(--ink, #24331A)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-              <path class="cm-face" fill="none" stroke="#A39274" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <g transform="translate(115 52) scale(1.1)">
+              <path class="cm-face" fill="none" stroke="var(--ink, #24331A)" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path class="cm-face" fill="none" stroke="#A39274" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
             </g>
           </g>
           <!-- 받침대 -->
@@ -164,8 +162,6 @@
         var q = h.q, qa = h.qa, ease = h.ease, clamp = h.clamp, drawPaths = h.drawPaths, lerpColor = h.lerpColor;
         // 한 번에 이어 그린 얼굴 선 (모든 단계가 같은 선을 이어받아요)
         h.root.querySelectorAll('.cm-face').forEach(function (p) { p.setAttribute('d', 'M62,52 C70,18 138,8 160,36 C176,56 174,92 166,114 C158,142 138,166 110,168 C80,170 58,146 55,116 C52,92 52,70 62,52 C76,66 84,74 92,80 C82,70 74,84 86,88 C98,92 102,78 92,78 C100,82 108,86 110,96 C112,106 108,114 102,120 C108,124 116,122 120,118 C116,128 104,134 94,132 C104,144 126,142 136,130 C142,116 150,98 140,82 C130,76 124,88 134,92 C146,96 150,82 140,80'); });
-        // 무드등 몸통(머리+어깨) 윤곽
-        h.root.querySelectorAll('.js-bust').forEach(function (p) { p.setAttribute('d', 'M164,232 C164,204 184,192 214,186 C190,174 172,148 172,114 C172,72 202,44 240,44 C278,44 308,72 308,114 C308,148 290,174 266,186 C296,192 316,204 316,232 Z'); });
         return [
     { dur: 5200, render: function (t) {
         var path = q(0, '.js-draw');
