@@ -13,10 +13,11 @@
   function normalize(s) { return (s || '').replace(/\s+/g, '').toLowerCase(); }
 
   function update() {
+    cards.forEach(function(card){if(!card.dataset.techniques){const slug=new URL(card.href).pathname.split('/').filter(Boolean).pop();card.dataset.techniques=ProgramTechniques.get({slug:slug,title:card.querySelector('.p-card__title')?.textContent,sub:card.querySelector('.p-card__sub')?.textContent}).join('|');}});
     var q = normalize(input ? input.value : '');
     var shown = 0;
     cards.forEach(function (card) {
-      var okGroup = current === '전체' || card.getAttribute('data-group') === current;
+      var okGroup = current === '전체' || (card.getAttribute('data-techniques')||'기타').split('|').includes(current);
       var okText = !q || normalize(card.getAttribute('data-search')).indexOf(q) !== -1;
       var visible = okGroup && okText;
       card.hidden = !visible;

@@ -7,7 +7,7 @@ const groups=['자율교육과정','교과 연계','동아리','협의·개발 �
 function status(t){$('#status').textContent=t;}
 function el(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
 async function run(fn){try{await fn();}catch(e){status(e.message);}}
-async function load(){sectionDefaults=await AdminSections.defaults();rows=await api.content();const defaults=(await(await fetch('../assets/data/programs.json')).json()).programs;for(const r of rows)if(r.kind==='program')r.data={...defaults.find(p=>p.slug===r.id),...r.data};render();}
+async function load(){sectionDefaults=await AdminSections.defaults();rows=await api.content();const defaults=(await(await fetch('../assets/data/programs.json')).json()).programs;for(const r of rows)if(r.kind==='program'){r.data={...defaults.find(p=>p.slug===r.id),...r.data};r.data.title=ProgramTechniques.renameTitle(r.data.title);}render();}
 function render(){
  const single=['home','about'].includes(kind);document.querySelector('.editor-layout').classList.toggle('single-editor',single);$('#records').hidden=single;
  $('#section-title').textContent=names[kind];$('#add').hidden=!['program','project'].includes(kind);$('#import').hidden=kind!=='program'||rows.some(r=>r.kind==='program');$('#records').replaceChildren();

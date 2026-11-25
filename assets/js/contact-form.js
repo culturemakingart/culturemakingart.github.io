@@ -2,7 +2,7 @@
  'use strict';
  const form=document.getElementById('inquiry-form');if(!form)return;
  const status=document.getElementById('inquiry-status'),button=form.querySelector('button[type=submit]');
- const program=(new URLSearchParams(location.search).get('program')||'').trim().slice(0,300);
+ const program=ProgramTechniques.renameTitle((new URLSearchParams(location.search).get('program')||'').trim().slice(0,300));
  const target=form.elements.program;
  if(program){
    target.value=program;target.defaultValue=program;target.closest('label').hidden=false;

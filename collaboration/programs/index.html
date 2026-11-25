@@ -14,9 +14,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600&amp;display=swap">
 <link rel="stylesheet" href="../../assets/css/style.css?v=20261105-design6">
 <script src="../../assets/js/main.js" defer></script>
-<script src="../../assets/js/programs.js" defer></script>
-<script src="/assets/js/content-order.js?v=20261105-order1" defer></script><script src="/assets/js/site-api.js" defer></script>
-<script src="/assets/js/site-content.js?v=20261125-subject1" defer></script>
+<script src="../../assets/js/programs.js?v=20261125-techniques1" defer></script>
+<script src="/assets/js/program-techniques.js?v=20261125-techniques1" defer></script><script src="/assets/js/content-order.js?v=20261105-order1" defer></script><script src="/assets/js/site-api.js" defer></script>
+<script src="/assets/js/site-content.js?v=20261125-techniques1" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">본문 바로가기</a>
@@ -53,13 +53,15 @@
         </div>
         <p id="program-count" class="result-count" aria-live="polite">16개 프로그램</p>
       </div>
-      <div class="filters" role="group" aria-label="프로그램 구분">
+      <div class="filters" role="group" aria-label="수업 기법">
 <button class="chip" type="button" data-filter="전체" aria-pressed="true">전체</button>
-<button class="chip" type="button" data-filter="자율교육과정" aria-pressed="false">자율교육과정</button>
-
-<button class="chip" type="button" data-filter="동아리" aria-pressed="false">동아리</button>
-<button class="chip" type="button" data-filter="협의·개발 중" aria-pressed="false">협의·개발 중</button>
-      </div>
+<button class="chip" type="button" data-filter="목공" aria-pressed="false">목공</button>
+<button class="chip" type="button" data-filter="도자" aria-pressed="false">도자</button>
+<button class="chip" type="button" data-filter="판화" aria-pressed="false">판화</button>
+<button class="chip" type="button" data-filter="드로잉" aria-pressed="false">드로잉</button>
+<button class="chip" type="button" data-filter="사진" aria-pressed="false">사진</button>
+<button class="chip" type="button" data-filter="기타" aria-pressed="false">기타</button>
+</div>
     </div>
     <div id="program-empty" class="empty" hidden>
       <strong>찾는 프로그램이 없어요</strong>
@@ -70,7 +72,7 @@
 <a class="p-card" href="x-box/" data-group="자율교육과정" data-search="X-box ">
   <div class="p-card__img bg-sky"><div class="ph">[ 수업 사진 ]</div></div>
   <div class="p-card__body">
-    <div class="p-card__tags"><span class="tag">자율교육과정</span></div>
+
     <h2 class="p-card__title">X-box</h2>
 
     <dl class="p-card__meta">
@@ -96,7 +98,7 @@
 <a class="p-card" href="shining-story/" data-group="자율교육과정" data-search="빛나는 이야기 폐목재로 무드등 만들기">
   <div class="p-card__img bg-pollen"><div class="ph">[ 수업 사진 ]</div></div>
   <div class="p-card__body">
-    <div class="p-card__tags"><span class="tag">자율교육과정</span></div>
+
     <h2 class="p-card__title">빛나는 이야기</h2>
     <p class="p-card__sub">폐목재로 무드등 만들기</p>
     <dl class="p-card__meta">
@@ -109,7 +111,7 @@
 <a class="p-card" href="layer-by-layer-story/" data-group="자율교육과정" data-search="한 층 한 층 쌓아보는 이야기 코일링 기법으로 이야기 쌓기">
   <div class="p-card__img bg-leaf"><div class="ph">[ 수업 사진 ]</div></div>
   <div class="p-card__body">
-    <div class="p-card__tags"><span class="tag">자율교육과정</span></div>
+
     <h2 class="p-card__title">한 층 한 층 쌓아보는 이야기</h2>
     <p class="p-card__sub">코일링 기법으로 이야기 쌓기</p>
     <dl class="p-card__meta">
@@ -122,7 +124,7 @@
 <a class="p-card" href="terrain-story/" data-group="협의·개발 중" data-search="지형 이야기 쌓기 ">
   <div class="p-card__img bg-sky"><div class="ph">[ 수업 사진 ]</div></div>
   <div class="p-card__body">
-    <div class="p-card__tags"><span class="tag">지역 수치지도에 맞춰 변경</span></div>
+
     <h2 class="p-card__title">지형 이야기 쌓기</h2>
 
     <dl class="p-card__meta">
@@ -135,7 +137,7 @@
 <a class="p-card" href="resource/" data-group="협의·개발 중" data-search="RE:SOURCE_다시 쓰는 자원: 예술이 되다 ">
   <div class="p-card__img bg-blush"><div class="ph">[ 수업 사진 ]</div></div>
   <div class="p-card__body">
-    <div class="p-card__tags"><span class="tag">세부 협의</span></div>
+
     <h2 class="p-card__title">RE:SOURCE_다시 쓰는 자원: 예술이 되다</h2>
 
     <dl class="p-card__meta">
@@ -148,7 +150,7 @@
 <a class="p-card" href="heat-island-map/" data-group="협의·개발 중" data-search="육지의 열섬지도 ">
   <div class="p-card__img bg-pollen"><div class="ph">[ 수업 사진 ]</div></div>
   <div class="p-card__body">
-    <div class="p-card__tags"><span class="tag">세부 내용 확인 중</span><span class="badge">기획 개발 중</span></div>
+
     <h2 class="p-card__title">육지의 열섬지도</h2>
 
     <dl class="p-card__meta">
@@ -161,7 +163,7 @@
 <a class="p-card" href="local-book-nook/" data-group="협의·개발 중" data-search="지역의 북누크 ">
   <div class="p-card__img bg-leaf"><div class="ph">[ 수업 사진 ]</div></div>
   <div class="p-card__body">
-    <div class="p-card__tags"><span class="tag">세부 내용 확인 중</span><span class="badge">기획 개발 중</span></div>
+
     <h2 class="p-card__title">지역의 북누크</h2>
 
     <dl class="p-card__meta">
@@ -184,11 +186,11 @@
     </dl>
   </div>
 </a>
-<a class="p-card" href="cola-print-human-rights/" data-group="교과 연계" data-search="콜라판화로 드러나는 인권 ">
+<a class="p-card" href="cola-print-human-rights/" data-group="교과 연계" data-search="콜라판화 ">
   <div class="p-card__img bg-blush"><div class="ph">[ 수업 사진 ]</div></div>
   <div class="p-card__body">
 
-    <h2 class="p-card__title">콜라판화로 드러나는 인권</h2>
+    <h2 class="p-card__title">콜라판화</h2>
 
     <dl class="p-card__meta">
       <div><dt>시간</dt><dd>1시간</dd></div>
@@ -226,7 +228,7 @@
 <a class="p-card" href="nickname-side-project/" data-group="동아리" data-search="별칭의 딴짓 ">
   <div class="p-card__img bg-sky"><div class="ph">[ 수업 사진 ]</div></div>
   <div class="p-card__body">
-    <div class="p-card__tags"><span class="tag">동아리</span></div>
+
     <h2 class="p-card__title">별칭의 딴짓</h2>
 
     <dl class="p-card__meta">
@@ -249,11 +251,11 @@
     </dl>
   </div>
 </a>
-<a class="p-card" href="apple-face-mood-lamp/" data-group="교과 연계" data-search="사과같은 내 얼굴 무드등 ">
+<a class="p-card" href="apple-face-mood-lamp/" data-group="교과 연계" data-search="블라인드 컨투어드로잉 무드등 ">
   <div class="p-card__img bg-pollen"><div class="ph">[ 수업 사진 ]</div></div>
   <div class="p-card__body">
 
-    <h2 class="p-card__title">사과같은 내 얼굴 무드등</h2>
+    <h2 class="p-card__title">블라인드 컨투어드로잉 무드등</h2>
 
     <dl class="p-card__meta">
       <div><dt>시간</dt><dd>1시간</dd></div>
